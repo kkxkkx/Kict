@@ -1,6 +1,8 @@
 package bit.edu.cn.dictionary.bean;
 
 
+import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
+
 public class AWord {
     //key是单词本身，ps是音标，pron是MP3的音频
     private String key=null,psE=null,pronE=null,psA=null,pronA=null;
@@ -10,6 +12,9 @@ public class AWord {
     private String[] Origs,Trans;
     private int Origsnum=0;
     private int Transnum=0;
+
+    //state记录这个单词有没有加入生词本
+    public State state=NOTSAVE;
 
 
     public AWord() {
@@ -24,6 +29,7 @@ public class AWord {
         this.interpret = "";
         this.Origs[Origsnum] ="";
         this.Trans[Transnum] ="";
+        this.state= NOTSAVE;
     }
 
     public  int getTransnum(){return Transnum;}
@@ -55,6 +61,9 @@ public class AWord {
 
     public void setInterpret(String interpret){this.interpret=interpret;}
     public String getInterpret(){return interpret;}
+
+    public void setState(State state){this.state=state;}
+    public  State getState(){return state;}
 
 
 }

@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static bit.edu.cn.dictionary.db.Recent.SQL_CREATE_ENTRIES;
-import static bit.edu.cn.dictionary.db.Recent.SQL_DELETE_ENTRIES;
+import static bit.edu.cn.dictionary.db.RecentContract.SQL_CREATE_ENTRIES;
+import static bit.edu.cn.dictionary.db.RecentContract.SQL_DELETE_ENTRIES;
 
 
 /**
@@ -16,7 +16,7 @@ import static bit.edu.cn.dictionary.db.Recent.SQL_DELETE_ENTRIES;
  */
 
 public class WordSQLHelper extends SQLiteOpenHelper {
-    private static final String TAG="DataBase";
+    private static final String TAG="WORDDB";
     private static int VERSION=1;    //数据库版本
 
     public WordSQLHelper(Context context) {
@@ -26,6 +26,7 @@ public class WordSQLHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        Log.v(TAG,"Creat");
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 

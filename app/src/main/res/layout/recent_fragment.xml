@@ -8,6 +8,6 @@
         android:id="@+id/recent_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/word_recent" />
+        tools:listitem="@layout/word_item" />
 
 </LinearLayout>

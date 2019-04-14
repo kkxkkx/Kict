@@ -2,6 +2,7 @@ package bit.edu.cn.dictionary.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bit.edu.cn.dictionary.R;
-import bit.edu.cn.dictionary.search.RecentOperator;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
+public class SaveAdapter extends RecyclerView.Adapter<SaveViewHolder> {
 
-public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
-
-    private final RecentOperator operator;
+    private static final String TAG = "SaveAdapter";
     private final List<RecentWord> words=new ArrayList<>();
 
-    public RecentAdapter(RecentOperator operator){
-        this.operator=operator;
-    }
-
     public  void refresh(List<RecentWord> newWords){
+        Log.v(TAG,"refresh");
         words.clear();
         if(newWords!=null){
             words.addAll(newWords);
@@ -33,20 +29,20 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
 
     @NonNull
     @Override
-    public RecentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public SaveViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         View itemView= LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.word_item,viewGroup,false);
-        return new RecentViewHolder(itemView,operator);
+                .inflate(R.layout.save_item,viewGroup,false);
+        return new SaveViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecentViewHolder recentViewHolder, int i) {
-        recentViewHolder.bind(words.get(i));
+    public void onBindViewHolder(@NonNull SaveViewHolder saveViewHolder, int i) {
+        saveViewHolder.bind(words.get(i));
     }
 
     @Override
     public int getItemCount() {
         return words.size();
     }
-
 }

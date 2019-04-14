@@ -2,15 +2,13 @@ package bit.edu.cn.dictionary;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.SearchView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import org.xml.sax.SAXException;
@@ -20,15 +18,18 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import bit.edu.cn.dictionary.bean.AWord;
-import bit.edu.cn.dictionary.bean.State;
+import bit.edu.cn.dictionary.bean.Page;
 import bit.edu.cn.dictionary.db.LocalWord;
-import bit.edu.cn.dictionary.db.WordSQLHelper;
-import bit.edu.cn.dictionary.utils.AudioUtils;
+import bit.edu.cn.dictionary.db.SaveWord;
+import bit.edu.cn.dictionary.search.EmptyFragment;
+import bit.edu.cn.dictionary.search.RecentFragment;
+import bit.edu.cn.dictionary.search.WordFragment;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
-import static bit.edu.cn.dictionary.bean.State.EMPTY;
-import static bit.edu.cn.dictionary.bean.State.RECENTINFO;
-import static bit.edu.cn.dictionary.bean.State.WORDINFO;
+import static bit.edu.cn.dictionary.bean.Page.EMPTY;
+import static bit.edu.cn.dictionary.bean.Page.RECENTINFO;
+import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
+import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -36,45 +37,67 @@ public class SearchActivity extends AppCompatActivity {
     public final static String StoragePath = "/kkdir/pron/";
     public static String searchword = null;
     private final String TAG = "search";
-    public WordSQLHelper wordSQLHelper;
-    public SQLiteDatabase db;
-    private SearchView searchView;
+    public SearchView searchView;
+    public static AWord Word_Now=null;
 
-    private final static int WRONG = 1;
     private WordFragment wordFragment = null;
     private RecentFragment recentFragment = null;
     private EmptyFragment empty=null;
 
+    private TextView btn_back=null;
+    public  SaveWord saveWord;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_word);
+        setContentView(R.layout.search);
 
+        btn_back=findViewById(R.id.cancel);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SearchActivity.this, MainActivity.class));
+            }
+        });
+
+        saveWord=new SaveWord(this);
         wordFragment = new WordFragment();
         recentFragment = new RecentFragment();
         empty=new EmptyFragment();
         switchFragment(RECENTINFO);
 
-        wordSQLHelper = new WordSQLHelper(this);
-        db = wordSQLHelper.getWritableDatabase();
         searchView = findViewById(R.id.searchView);
+        searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 searchword = s;
-                switchFragment(WORDINFO);
+                saveWord=new SaveWord(getBaseContext());
                 getWordFromInternet();
-
+                switchFragment(WORDINFO);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                switchFragment(EMPTY);
+                if(s.length()!=0)
+                    switchFragment(EMPTY);
+                else
+                    switchFragment(RECENTINFO);
                 return false;
             }
         });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.v(TAG,"hasFocus"+hasFocus);
+                switchFragment(RECENTINFO);
+            }
+        });
+
     }
 
 
@@ -82,6 +105,31 @@ public class SearchActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
+    public void switchFragment(Page page)
+    {
+        FragmentManager fm=getFragmentManager();
+        if(fm.getBackStackEntryCount()!=0)
+            fm.popBackStack();
+        FragmentTransaction ft=fm.beginTransaction();
+        switch (page){
+            case WORDINFO:
+                ft.replace(R.id.fragment_container,wordFragment);
+                ft.addToBackStack(null);
+                break;
+            case EMPTY:
+                ft.replace(R.id.fragment_container,empty);
+                ft.addToBackStack(null);
+                break;
+            case RECENTINFO:
+                ft.replace(R.id.fragment_container,recentFragment);
+                ft.addToBackStack(null);
+                break;
+        }
+        ft.commit();
+    }
+
 
     //对输入的单词进行搜索
     public void getWordFromInternet() {
@@ -103,18 +151,28 @@ public class SearchActivity extends AppCompatActivity {
 
                 try {
                     Log.v(TAG, "start thread");
-                    final AWord Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
+                    Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
                     if (Word_Now == null)
                     {
                         Message message = new Message();
-                        message.obj = WRONG;
                         //   handler.sendMessage(message);
                         //TODO message的传递
                     } else {
                         Runnable updateUIControl=new Runnable() {
                             @Override
                             public void run() {
-                               wordFragment.word_info.setText(Word_Now.getKey()+"\n"+Word_Now.getPsA()+"  "+Word_Now.getPsE()+"\n"+Word_Now.getInterpret());
+
+                                if(saveWord.IsSaved(searchword))
+                                {
+                                    Log.v(TAG,"refreshUI");
+                                    wordFragment.word_state.setImageResource(R.drawable.saved);
+                                }
+                                else {
+                                    Log.v(TAG,"refreshUI");
+                                    wordFragment.word_state.setImageResource(R.drawable.tosave);
+
+                                }
+                                wordFragment.word_info.setText(Word_Now.getKey()+"\n"+Word_Now.getPsA()+"  "+Word_Now.getPsE()+"\n"+Word_Now.getInterpret());
 
                             }
                             //TODO 封装音频
@@ -123,6 +181,13 @@ public class SearchActivity extends AppCompatActivity {
 
                         };
                         SearchActivity.this.runOnUiThread(updateUIControl);
+                        LocalWord localWord=new LocalWord(getBaseContext());
+
+                        //判断是否在最近查询中
+                        if(!localWord.IsExistDB(Word_Now))
+                            localWord.saveInfoDatabase(Word_Now);
+                        Word_Now.setState(NOTSAVE);
+                        Log.v(TAG, String.valueOf(Word_Now.getState()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -135,29 +200,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         thread.start();
-    }
-
-    private void switchFragment(State state)
-    {
-        FragmentManager fm=getFragmentManager();
-        if(fm.getBackStackEntryCount()!=0)
-            fm.popBackStack();
-        FragmentTransaction ft=fm.beginTransaction();
-        switch (state){
-            case WORDINFO:
-                ft.replace(R.id.fragment_container,wordFragment);
-                ft.addToBackStack(null);
-                break;
-            case EMPTY:
-                ft.replace(R.id.fragment_container,empty);
-                ft.addToBackStack(null);
-                break;
-            case RECENTINFO:
-                ft.replace(R.id.fragment_container,recentFragment);
-                ft.addToBackStack(null);
-                break;
-        }
-        ft.commit();
     }
 }
 

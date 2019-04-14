@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         REQUEST_CODE_ADD);
                 break;
             case R.id.WordBook:
-                startActivity(new Intent(this, WordListActivity.class));
+                startActivity(new Intent(this, SaveActivity.class));
                 break;
         }
     }

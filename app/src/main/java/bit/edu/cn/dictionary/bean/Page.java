@@ -1,11 +1,11 @@
 package bit.edu.cn.dictionary.bean;
 
-public enum State {
+public enum Page {
+    EMPTY(0),WORDINFO(1),RECENTINFO(2);
 
-    NOTSAVE(0),SAVED(1);
     public final int intValue;
 
-    State(int Value){
+    Page(int Value){
         this.intValue=Value;
     }
 }

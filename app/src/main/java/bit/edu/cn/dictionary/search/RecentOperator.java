@@ -1,4 +1,4 @@
-package bit.edu.cn.dictionary;
+package bit.edu.cn.dictionary.search;
 
 
 import bit.edu.cn.dictionary.bean.RecentWord;
@@ -6,6 +6,5 @@ import bit.edu.cn.dictionary.bean.RecentWord;
 public interface RecentOperator {
 
     void deleteWord(RecentWord word);
-
-    void updateWord(RecentWord word);
+    void changeFragment(String s);
 }

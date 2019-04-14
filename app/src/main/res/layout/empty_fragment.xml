@@ -9,7 +9,5 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="死不休撒娇不行啊就是不喜死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好TextViewvx不允许不死不休撒娇不行啊就是不喜欢就是丙烯酸好死不休撒娇不行啊就是不喜欢就是丙烯酸好像不啊生于巴西扫三必须阿苏好像八素潇洒锡卡索先把素有不行啊双休啊撒行不啊是小白省辖市"
-        tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="120dp" />
 </android.support.constraint.ConstraintLayout>
