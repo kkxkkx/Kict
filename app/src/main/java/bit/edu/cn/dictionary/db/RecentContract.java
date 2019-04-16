@@ -9,6 +9,7 @@ public class RecentContract {
                     RecentInfo._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                     RecentInfo.COlUMN_DATE+" TEXT,"+
                     RecentInfo.COLUMN_WORD+" TEXT UNIQUE,"+
+                    RecentInfo.COLUMN_USED+" BOOLEAN,"+
                     RecentInfo.COLUMN_INTERPRET+" TEXT)";
     public static final String SQL_DELETE_ENTRIES=
             "DROP TABLE IF EXITS "+ RecentInfo.TABLE_NAME;
@@ -19,5 +20,6 @@ public class RecentContract {
         public static String  COlUMN_DATE="date";
         public static String  COLUMN_WORD="word";
         public static String  COLUMN_INTERPRET="interpret";
+        public static boolean COLUMN_USED=false;
     }
 }

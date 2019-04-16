@@ -1,20 +1,33 @@
 package bit.edu.cn.dictionary;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import bit.edu.cn.dictionary.db.LocalWord;
+
+import static bit.edu.cn.dictionary.db.GetInfo.getInterpret;
+import static bit.edu.cn.dictionary.db.GetInfo.getWord;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_ADD=2;
-
+    private static final String TAG="main";
+    private LocalWord localWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Manifest.permission.ACCESS_NETWORK_STATE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            String channelID="word";
+            String channelName="单词推送";
+            int importance=NotificationManager.IMPORTANCE_HIGH;
+            createNotificationChannel(channelID,channelName,importance);
 
+        }
         findViewById(R.id.find).setOnClickListener(this);
         findViewById(R.id.WordBook).setOnClickListener(this);
 
@@ -69,5 +88,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationChannel(String channelId, String channelName, int importance)
+    {
+        NotificationChannel channel=new NotificationChannel(channelId,channelName,importance);
+        channel.setShowBadge(false);
+        NotificationManager notificationManager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    public void sendwordMsg(View view) {
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String word=getWord();
+        String interpret=getInterpret();
+        Notification notification = new NotificationCompat.Builder(this, "chat")
+                .setContentTitle(word)
+                .setContentText(interpret)
+                .setSmallIcon(R.drawable.icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon))
+                .setAutoCancel(true)
+                .setShowWhen(false)
+                .setOngoing(true)
+                .build();
+        manager.notify(1, notification);
+    }
 }
 

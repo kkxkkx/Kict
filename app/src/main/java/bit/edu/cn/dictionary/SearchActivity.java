@@ -138,7 +138,6 @@ public class SearchActivity extends AppCompatActivity {
         if (Word_temp == null || Word_temp.equals(""))
             return ;
         char[] array = Word_temp.toCharArray();
-        //TODO 这里是中文需要进行修改
         if (array[0] > 256)
             return ;
 
@@ -154,9 +153,7 @@ public class SearchActivity extends AppCompatActivity {
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
                     if (Word_Now == null)
                     {
-                        Message message = new Message();
-                        //   handler.sendMessage(message);
-                        //TODO message的传递
+
                     } else {
                         Runnable updateUIControl=new Runnable() {
                             @Override
@@ -175,15 +172,10 @@ public class SearchActivity extends AppCompatActivity {
                                 wordFragment.word_info.setText(Word_Now.getKey()+"\n"+Word_Now.getPsA()+"  "+Word_Now.getPsE()+"\n"+Word_Now.getInterpret());
 
                             }
-                            //TODO 封装音频
-                            // AudioUtils.getAudio(Word_Now.getPronA(), searchword + "A");
-                            //AudioUtils.getAudio(Word_Now.getPronE(), searchword + "E");
-
                         };
                         SearchActivity.this.runOnUiThread(updateUIControl);
                         LocalWord localWord=new LocalWord(getBaseContext());
 
-                        //判断是否在最近查询中
                         if(!localWord.IsExistDB(Word_Now))
                             localWord.saveInfoDatabase(Word_Now);
                         Word_Now.setState(NOTSAVE);
