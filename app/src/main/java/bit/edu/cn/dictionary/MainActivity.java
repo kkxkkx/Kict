@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String word=getWord();
         String interpret=getInterpret();
         Notification notification = new NotificationCompat.Builder(this, "chat")
-                .setContentTitle(word)
-                .setContentText(interpret)
+                .setContentTitle("hello")
+                .setContentText("n.你好")
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon))
                 .setAutoCancel(true)
