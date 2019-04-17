@@ -18,8 +18,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
-import bit.edu.cn.dictionary.db.LocalWord;
-
 import static bit.edu.cn.dictionary.db.GetInfo.getInterpret;
 import static bit.edu.cn.dictionary.db.GetInfo.getWord;
 
@@ -27,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_ADD=2;
     private static final String TAG="main";
-    private LocalWord localWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

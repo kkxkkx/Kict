@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bit.edu.cn.dictionary.R;
-import bit.edu.cn.dictionary.search.RecentOperator;
 import bit.edu.cn.dictionary.bean.RecentWord;
+import bit.edu.cn.dictionary.search.HistoryOperator;
 
 
-public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryViewHolder> {
 
-    private final RecentOperator operator;
+    private final HistoryOperator operator;
     private final List<RecentWord> words=new ArrayList<>();
 
-    public RecentAdapter(RecentOperator operator){
+    public HistoryAdapter(HistoryOperator operator){
         this.operator=operator;
     }
 
@@ -33,15 +33,15 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
 
     @NonNull
     @Override
-    public RecentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView= LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.word_item,viewGroup,false);
-        return new RecentViewHolder(itemView,operator);
+                .inflate(R.layout.history_item,viewGroup,false);
+        return new HistoryViewHolder(itemView,operator);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecentViewHolder recentViewHolder, int i) {
-        recentViewHolder.bind(words.get(i));
+    public void onBindViewHolder(@NonNull HistoryViewHolder historyViewHolder, int i) {
+        historyViewHolder.bind(words.get(i));
     }
 
     @Override

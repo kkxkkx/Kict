@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.RecentWord;
-import bit.edu.cn.dictionary.db.LocalWord;
-import bit.edu.cn.dictionary.ui.RecentAdapter;
+import bit.edu.cn.dictionary.db.HistoryWord;
+import bit.edu.cn.dictionary.ui.HistoryAdapter;
 
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 
-public class RecentFragment extends Fragment {
+public class HistoryFragment extends Fragment {
     private View view;
     public RecyclerView recyclerView;
-    public static RecentAdapter ReAdapter;
+    public static HistoryAdapter HisAdapter;
     private final static String TAG="RECENT_FRAGMENT";
 
 
@@ -36,20 +36,21 @@ public class RecentFragment extends Fragment {
             }
             return view;
         }
-        view=inflater.inflate(R.layout.recent_fragment, container,false);
+        Log.v(TAG,"create");
+        view=inflater.inflate(R.layout.history_fragment, container,false);
         initRecyclerView();
         return view;
     }
 
     private void initRecyclerView()
     {
-        Log.v("init"," recent recycler");
-        recyclerView=(RecyclerView)view.findViewById(R.id.recent_list);
+        Log.v("init"," history recycler");
+        recyclerView= view.findViewById(R.id.history_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-        final LocalWord localWord=new LocalWord(getActivity());
+        final HistoryWord localWord=new HistoryWord(getActivity());
 
-        ReAdapter=new RecentAdapter(new RecentOperator(){
+        HisAdapter=new HistoryAdapter(new HistoryOperator(){
 
             @Override
             public void deleteWord(RecentWord word) {
@@ -61,14 +62,15 @@ public class RecentFragment extends Fragment {
             public void changeFragment(String s) {
                 Log.v(TAG,"search");
                 SearchActivity search=(SearchActivity)getActivity();
-                search.searchword=s;
+
+                SearchActivity.searchword =s;
                 search.getWordFromInternet();
                 search.switchFragment(WORDINFO);
             }
         });
 
-        recyclerView.setAdapter(ReAdapter);
-        ReAdapter.refresh(localWord.LoadWordsFromDatabase());
+        recyclerView.setAdapter(HisAdapter);
+        HisAdapter.refresh(localWord.LoadWordsFromDatabase());
     }
 
 

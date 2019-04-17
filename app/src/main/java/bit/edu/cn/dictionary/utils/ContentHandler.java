@@ -41,7 +41,7 @@ public class ContentHandler extends DefaultHandler {
     //开始解析节点
     @Override
     public void startElement(String uri, String localnName,
-                             String qName, Attributes attributes)throws SAXException{
+                             String qName, Attributes attributes) {
         nodename=localnName;  //把当前的标签记录下来
 
     }

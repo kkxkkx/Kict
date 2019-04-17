@@ -4,34 +4,30 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import bit.edu.cn.dictionary.R;
-import bit.edu.cn.dictionary.search.RecentOperator;
 import bit.edu.cn.dictionary.bean.RecentWord;
+import bit.edu.cn.dictionary.search.HistoryOperator;
 
 
-public class RecentViewHolder extends RecyclerView.ViewHolder {
+public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-    private View view;
     private TextView wordText;
     private TextView interpretText;
-    private final RecentOperator operator;
+    private final HistoryOperator operator;
     private ImageButton deleteBtn;
     private final static String TAG="Holder";
 
-    public RecentViewHolder(@NonNull View itemView , final RecentOperator operator) {
+    public HistoryViewHolder(@NonNull View itemView , final HistoryOperator operator) {
         super(itemView);
-        view=itemView;
         this.operator=operator;
         wordText=itemView.findViewById(R.id.text_word);
         interpretText=itemView.findViewById(R.id.text_interpret);
         deleteBtn=itemView.findViewById(R.id.delete);
 
     }
-
 
 
     public void bind(final RecentWord recentWord)

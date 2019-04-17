@@ -15,7 +15,7 @@ import java.util.List;
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
-import static bit.edu.cn.dictionary.search.RecentFragment.ReAdapter;
+import static bit.edu.cn.dictionary.search.HistoryFragment.HisAdapter;
 
 
 /**
@@ -24,13 +24,13 @@ import static bit.edu.cn.dictionary.search.RecentFragment.ReAdapter;
  * @function  将单词写入数据库，从数据库中读取单词
  */
 
-public class LocalWord {
+public class HistoryWord {
     private Context Context=null;
     private WordSQLHelper helper=null;
     private SQLiteDatabase db=null;
     private final static String TAG="LocalWord";
 
-    public LocalWord(Context context){
+    public HistoryWord(Context context){
         Context=context;
         helper=new WordSQLHelper(Context);  //实例化WordSQLHelper类
         db=helper.getWritableDatabase();  //写下数据，writ
@@ -58,20 +58,20 @@ public class LocalWord {
         List<RecentWord> result=new LinkedList<>();
         Cursor cursor=null;
         try{
-            cursor=db.query(RecentContract.RecentInfo.TABLE_NAME,
+            cursor=db.query(HistoryContract.HistoryInfo.TABLE_NAME,
                     new String[]{
-                    RecentContract.RecentInfo.COLUMN_WORD,
-                    RecentContract.RecentInfo.COLUMN_INTERPRET,
-                            RecentContract.RecentInfo.COlUMN_DATE,
-                            RecentContract.RecentInfo._ID},
+                            HistoryContract.HistoryInfo.COLUMN_WORD,
+                            HistoryContract.HistoryInfo.COLUMN_INTERPRET,
+                            HistoryContract.HistoryInfo.COlUMN_DATE,
+                            HistoryContract.HistoryInfo._ID},
                     null,null,null,
-                    null, RecentContract.RecentInfo.COlUMN_DATE+" DESC");
+                    null, HistoryContract.HistoryInfo.COlUMN_DATE+" DESC");
             while(cursor.moveToNext())
             {
-                long int_now=cursor.getLong(cursor.getColumnIndex(RecentContract.RecentInfo._ID));
-                long date_now=cursor.getLong(cursor.getColumnIndex(RecentContract.RecentInfo.COlUMN_DATE));
-                String word_now=cursor.getString(cursor.getColumnIndex(RecentContract.RecentInfo.COLUMN_WORD));
-                String interpret_now=cursor.getString(cursor.getColumnIndex(RecentContract.RecentInfo.COLUMN_INTERPRET));
+                long int_now=cursor.getLong(cursor.getColumnIndex(HistoryContract.HistoryInfo._ID));
+                long date_now=cursor.getLong(cursor.getColumnIndex(HistoryContract.HistoryInfo.COlUMN_DATE));
+                String word_now=cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryInfo.COLUMN_WORD));
+                String interpret_now=cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryInfo.COLUMN_INTERPRET));
 
                 RecentWord recentWord=new RecentWord(int_now);
                 recentWord.setWord(word_now);
@@ -91,25 +91,25 @@ public class LocalWord {
 
     public void deleteWord(RecentWord word)
     {
-        String selection=RecentContract.RecentInfo._ID+" =?";
+        String selection=HistoryContract.HistoryInfo._ID+" =?";
         String[] selectiopnArgs={String.valueOf(word.id)};
-        int deletedRow=db.delete(RecentContract.RecentInfo.TABLE_NAME,selection,selectiopnArgs);
+        int deletedRow=db.delete(HistoryContract.HistoryInfo.TABLE_NAME,selection,selectiopnArgs);
         if(deletedRow>0)
-            ReAdapter.refresh(LoadWordsFromDatabase());
+            HisAdapter.refresh(LoadWordsFromDatabase());
     }
 
     public boolean IsExistDB(AWord w)
     {
-        String selection=RecentContract.RecentInfo.COLUMN_WORD+" = ?";
+        String selection=HistoryContract.HistoryInfo.COLUMN_WORD+" = ?";
         String[] selectionArgs={w.getKey()};
         Cursor cursor=null;
         try {
-                cursor = db.query(RecentContract.RecentInfo.TABLE_NAME,
+            cursor = db.query(HistoryContract.HistoryInfo.TABLE_NAME,
                     new String[]{
-                            RecentContract.RecentInfo.COLUMN_WORD,
-                            RecentContract.RecentInfo.COLUMN_INTERPRET,
-                            RecentContract.RecentInfo.COlUMN_DATE,
-                            RecentContract.RecentInfo._ID},
+                            HistoryContract.HistoryInfo.COLUMN_WORD,
+                            HistoryContract.HistoryInfo.COLUMN_INTERPRET,
+                            HistoryContract.HistoryInfo.COlUMN_DATE,
+                            HistoryContract.HistoryInfo._ID},
                     selection,
                     selectionArgs,
                     null,
@@ -117,10 +117,10 @@ public class LocalWord {
             if (cursor.getCount() == 0)
                 return false;
             ContentValues contentValues = new ContentValues();
-            contentValues.put(RecentContract.RecentInfo.COLUMN_WORD, w.getKey());
-            contentValues.put(RecentContract.RecentInfo.COLUMN_INTERPRET, w.getInterpret());
-            contentValues.put(RecentContract.RecentInfo.COlUMN_DATE, System.currentTimeMillis());
-            db.update(RecentContract.RecentInfo.TABLE_NAME, contentValues, selection, selectionArgs);
+            contentValues.put(HistoryContract.HistoryInfo.COLUMN_WORD, w.getKey());
+            contentValues.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET, w.getInterpret());
+            contentValues.put(HistoryContract.HistoryInfo.COlUMN_DATE, System.currentTimeMillis());
+            db.update(HistoryContract.HistoryInfo.TABLE_NAME, contentValues, selection, selectionArgs);
         }finally {
             if(cursor!=null)
                 cursor.close();
@@ -137,10 +137,10 @@ public class LocalWord {
             return ;
         }
         ContentValues contentValue=new ContentValues();
-        contentValue.put(RecentContract.RecentInfo.COlUMN_DATE,System.currentTimeMillis());
-        contentValue.put(RecentContract.RecentInfo.COLUMN_INTERPRET,w.getInterpret());
-        contentValue.put(RecentContract.RecentInfo.COLUMN_WORD,w.getKey());
-        long rowId=db.insert(RecentContract.RecentInfo.TABLE_NAME,null,contentValue);
+        contentValue.put(HistoryContract.HistoryInfo.COlUMN_DATE,System.currentTimeMillis());
+        contentValue.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET,w.getInterpret());
+        contentValue.put(HistoryContract.HistoryInfo.COLUMN_WORD,w.getKey());
+        long rowId=db.insert(HistoryContract.HistoryInfo.TABLE_NAME,null,contentValue);
     }
 
 }

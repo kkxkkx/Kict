@@ -2,12 +2,12 @@ package bit.edu.cn.dictionary;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -19,15 +19,15 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.Page;
-import bit.edu.cn.dictionary.db.LocalWord;
+import bit.edu.cn.dictionary.db.HistoryWord;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.search.EmptyFragment;
-import bit.edu.cn.dictionary.search.RecentFragment;
+import bit.edu.cn.dictionary.search.HistoryFragment;
 import bit.edu.cn.dictionary.search.WordFragment;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
 import static bit.edu.cn.dictionary.bean.Page.EMPTY;
-import static bit.edu.cn.dictionary.bean.Page.RECENTINFO;
+import static bit.edu.cn.dictionary.bean.Page.HistoryInfo;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 
@@ -41,8 +41,9 @@ public class SearchActivity extends AppCompatActivity {
     public static AWord Word_Now=null;
 
     private WordFragment wordFragment = null;
-    private RecentFragment recentFragment = null;
+    private HistoryFragment historyFragment = null;
     private EmptyFragment empty=null;
+    public EditText mEditTextSearch;
 
     private TextView btn_back=null;
     public  SaveWord saveWord;
@@ -50,21 +51,25 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
+        setContentView(R.layout.acitivity_search);
 
         btn_back=findViewById(R.id.cancel);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SearchActivity.this, MainActivity.class));
+                finish();
             }
         });
 
+      //  mEditTextSearch=findViewById(R.id.et_search);
+
+
         saveWord=new SaveWord(this);
         wordFragment = new WordFragment();
-        recentFragment = new RecentFragment();
+        historyFragment = new HistoryFragment();
         empty=new EmptyFragment();
-        switchFragment(RECENTINFO);
+        switchFragment(HistoryInfo);
+
 
         searchView = findViewById(R.id.searchView);
         searchView.onActionViewExpanded();
@@ -72,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
                 searchword = s;
                 saveWord=new SaveWord(getBaseContext());
                 getWordFromInternet();
@@ -84,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                 if(s.length()!=0)
                     switchFragment(EMPTY);
                 else
-                    switchFragment(RECENTINFO);
+                    switchFragment(HistoryInfo);
                 return false;
             }
         });
@@ -94,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Log.v(TAG,"hasFocus"+hasFocus);
-                switchFragment(RECENTINFO);
+                switchFragment(HistoryInfo);
             }
         });
 
@@ -104,6 +110,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.v(TAG,"destroy");
     }
 
 
@@ -122,14 +129,23 @@ public class SearchActivity extends AppCompatActivity {
                 ft.replace(R.id.fragment_container,empty);
                 ft.addToBackStack(null);
                 break;
-            case RECENTINFO:
-                ft.replace(R.id.fragment_container,recentFragment);
+            case HistoryInfo:
+                ft.replace(R.id.fragment_container,historyFragment);
                 ft.addToBackStack(null);
                 break;
         }
         ft.commit();
     }
 
+    //重写返回方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+            if(keyCode== KeyEvent.KEYCODE_BACK)
+                finish();
+            Log.v(TAG,"back");
+            return true;
+    }
 
     //对输入的单词进行搜索
     public void getWordFromInternet() {
@@ -174,10 +190,10 @@ public class SearchActivity extends AppCompatActivity {
                             }
                         };
                         SearchActivity.this.runOnUiThread(updateUIControl);
-                        LocalWord localWord=new LocalWord(getBaseContext());
+                        HistoryWord history=new HistoryWord(getBaseContext());
 
-                        if(!localWord.IsExistDB(Word_Now))
-                            localWord.saveInfoDatabase(Word_Now);
+                        if(!history.IsExistDB(Word_Now))
+                            history.saveInfoDatabase(Word_Now);
                         Word_Now.setState(NOTSAVE);
                         Log.v(TAG, String.valueOf(Word_Now.getState()));
                     }

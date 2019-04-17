@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static bit.edu.cn.dictionary.db.RecentContract.SQL_CREATE_ENTRIES;
-import static bit.edu.cn.dictionary.db.RecentContract.SQL_DELETE_ENTRIES;
+import static bit.edu.cn.dictionary.db.HistoryContract.SQL_CREATE_ENTRIES;
+import static bit.edu.cn.dictionary.db.HistoryContract.SQL_DELETE_ENTRIES;
 
 
 /**
@@ -21,7 +21,7 @@ public class WordSQLHelper extends SQLiteOpenHelper {
 
     public WordSQLHelper(Context context) {
 
-        super(context, "Recent", null, VERSION);
+        super(context, "History", null, VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db)

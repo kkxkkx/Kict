@@ -7,8 +7,6 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 import java.util.Timer;
 
-import bit.edu.cn.dictionary.db.LocalWord;
-
 import static bit.edu.cn.dictionary.SearchActivity.StoragePath;
 
 
@@ -28,7 +26,7 @@ public class AudioPlay {
     {
         this.mcontext=context;
         TableName=Name;
-        LocalWord localWord=new LocalWord(mcontext);
+        //LocalWord localWord=new LocalWord(mcontext);
         Ispermitted=true;
     }
     //TODO 播放

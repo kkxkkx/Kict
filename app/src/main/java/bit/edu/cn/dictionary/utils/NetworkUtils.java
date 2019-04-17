@@ -1,5 +1,7 @@
 package bit.edu.cn.dictionary.utils;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import org.xml.sax.InputSource;
@@ -10,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -30,7 +33,8 @@ public class NetworkUtils {
     public final static String TAG="FetchXML";
 
 
-    public static AWord getInputStreamByUrl(String urlStr,String searchword)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static AWord getInputStreamByUrl(String urlStr, String searchword)
             throws IOException, ParserConfigurationException, SAXException {
 
         AWord Word_Now = null;
@@ -55,7 +59,7 @@ public class NetworkUtils {
         if (tempInput != null) {
             parseXML parseXML = new parseXML();
             //将输入流放入reader中
-            InputStreamReader reader = new InputStreamReader(tempInput, "utf-8");
+            InputStreamReader reader = new InputStreamReader(tempInput, StandardCharsets.UTF_8);
             ContentHandler contentHandler = new ContentHandler();
             //解析
             parseXML.paraseXMLwithSAX(contentHandler, new InputSource(reader));

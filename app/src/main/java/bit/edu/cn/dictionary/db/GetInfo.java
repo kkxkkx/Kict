@@ -1,7 +1,5 @@
 package bit.edu.cn.dictionary.db;
 
-import android.content.Context;
-
 public class GetInfo  {
     public static String getWord()
     {
