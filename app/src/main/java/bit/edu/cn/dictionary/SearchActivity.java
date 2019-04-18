@@ -2,7 +2,9 @@ package bit.edu.cn.dictionary;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,6 +32,7 @@ import static bit.edu.cn.dictionary.bean.Page.EMPTY;
 import static bit.edu.cn.dictionary.bean.Page.HistoryInfo;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
+import static bit.edu.cn.dictionary.search.HistoryFragment.HisAdapter;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -47,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private TextView btn_back=null;
     public  SaveWord saveWord;
+    public HistoryWord historyWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class SearchActivity extends AppCompatActivity {
         empty=new EmptyFragment();
         switchFragment(HistoryInfo);
 
+        historyWord=new HistoryWord(this);
 
         searchView = findViewById(R.id.searchView);
         searchView.onActionViewExpanded();
@@ -90,7 +95,10 @@ public class SearchActivity extends AppCompatActivity {
                 if(s.length()!=0)
                     switchFragment(EMPTY);
                 else
+                {
+                    HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
                     switchFragment(HistoryInfo);
+                }
                 return false;
             }
         });
@@ -161,6 +169,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Thread thread = new Thread(new Runnable() {
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
 

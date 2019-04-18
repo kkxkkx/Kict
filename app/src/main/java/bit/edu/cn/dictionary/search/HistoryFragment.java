@@ -48,14 +48,14 @@ public class HistoryFragment extends Fragment {
         recyclerView= view.findViewById(R.id.history_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-        final HistoryWord localWord=new HistoryWord(getActivity());
+        final HistoryWord historyWord=new HistoryWord(getActivity());
 
         HisAdapter=new HistoryAdapter(new HistoryOperator(){
 
             @Override
             public void deleteWord(RecentWord word) {
                 Log.v(TAG,"delete");
-                localWord.deleteWord(word);
+                historyWord.deleteWord(word);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class HistoryFragment extends Fragment {
         });
 
         recyclerView.setAdapter(HisAdapter);
-        HisAdapter.refresh(localWord.LoadWordsFromDatabase());
+        HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
     }
 
 
