@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.ui.SaveAdapter;
@@ -23,11 +24,20 @@ public class SaveActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.save);
+        setContentView(R.layout.activity_list);
 
-        toolbar=findViewById(R.id.wordlist);
+        toolbar=findViewById(R.id.word_list);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        getSupportActionBar().setTitle("");
         saved_recycler=findViewById(R.id.saved_list);
         saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         saved_recycler.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
@@ -63,4 +73,6 @@ public class SaveActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static class HomeAcitivity {
+    }
 }

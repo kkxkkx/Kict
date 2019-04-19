@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="12dp"
+    android:paddingTop="8dp">
+
+    <TextView
+        android:id="@+id/iv_theme_select"
+        android:layout_width="257dp"
+        android:layout_height="59dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp"
+        android:layout_marginBottom="13dp"
+        android:textColor="#1e1e1e"
+        android:textSize="25sp"
+        tools:text="word" />
+
+    <ImageView
+        android:id="@+id/iv_color"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/iv_theme_select"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginBottom="1dp"
+        android:layout_toStartOf="@+id/iv_theme_select"
+        android:layout_toLeftOf="@+id/iv_theme_select"
+        app:srcCompat="@color/colorDark" />
+
+    <ImageView
+        android:id="@+id/iv_frame"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/iv_color"
+        android:layout_alignEnd="@+id/iv_color"
+        android:layout_alignRight="@+id/iv_color"
+        android:layout_alignBottom="@+id/iv_theme_select"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toStartOf="@+id/iv_theme_select"
+        android:layout_toLeftOf="@+id/iv_theme_select"
+        app:srcCompat="@color/colorPrimary" />
+
+
+</RelativeLayout>

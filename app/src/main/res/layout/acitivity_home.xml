@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/user_icon"
+        android:layout_width="111dp"
+        android:layout_height="103dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon_avatar"
+        tools:layout_editor_absoluteY="79dp" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="89dp"
+        android:layout_height="32dp"
+        android:layout_alignStart="@+id/user_icon"
+        android:layout_alignLeft="@+id/user_icon"
+        android:layout_alignTop="@+id/user_icon"
+        android:layout_alignEnd="@+id/user_icon"
+        android:layout_alignRight="@+id/user_icon"
+        android:layout_alignBottom="@+id/user_icon"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="-32dp"
+        android:gravity="center"
+        android:text="user"
+        android:textSize="26dp" />
+
+    <ImageView
+        android:id="@+id/iv_list"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_below="@+id/user_name"
+        android:layout_alignStart="@+id/user_icon"
+        android:layout_alignLeft="@+id/user_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="-62dp"
+        android:layout_marginLeft="-62dp"
+        android:layout_marginTop="173dp"
+        android:layout_marginEnd="242dp"
+        android:layout_marginRight="242dp"
+        app:srcCompat="@drawable/icon_word_list" />
+
+    <TextView
+        android:id="@+id/tv_list"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iv_list"
+        android:layout_alignLeft="@+id/iv_list"
+        android:layout_alignEnd="@id/iv_list"
+        android:layout_alignRight="@id/iv_list"
+        android:layout_alignBottom="@+id/iv_list"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="-20dp"
+        android:gravity="center"
+        android:text="生词本" />
+
+    <ImageView
+        android:id="@+id/iv_settings"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/user_icon"
+        android:layout_alignRight="@+id/user_icon"
+        android:layout_alignBottom="@+id/iv_list"
+        android:layout_marginEnd="-53dp"
+        android:layout_marginRight="-53dp"
+        android:layout_marginBottom="0dp"
+        app:srcCompat="@drawable/icon_set" />
+
+    <TextView
+        android:id="@+id/tv_settings"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_settings"
+        android:layout_alignStart="@+id/iv_settings"
+        android:layout_alignLeft="@+id/iv_settings"
+        android:layout_alignEnd="@+id/iv_settings"
+        android:layout_alignRight="@+id/iv_settings"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:gravity="center"
+        android:text="设置" />
+
+    <ImageView
+        android:id="@+id/iv_theme"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_alignStart="@+id/iv_list"
+        android:layout_alignLeft="@+id/iv_list"
+        android:layout_alignEnd="@+id/iv_list"
+        android:layout_alignRight="@+id/iv_list"
+        android:layout_alignBottom="@+id/tv_list"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="-154dp"
+        app:srcCompat="@drawable/icon_theme" />
+
+    <TextView
+        android:id="@+id/tv_theme"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iv_theme"
+        android:layout_alignLeft="@+id/iv_theme"
+        android:layout_alignEnd="@+id/iv_theme"
+        android:layout_alignRight="@+id/iv_theme"
+        android:layout_alignBottom="@+id/iv_theme"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="-12dp"
+        android:gravity="center"
+        android:text="主题" />
+
+    <ImageView
+        android:id="@+id/iv_message"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/iv_settings"
+        android:layout_alignLeft="@+id/iv_settings"
+        android:layout_alignEnd="@+id/iv_settings"
+        android:layout_alignRight="@+id/iv_settings"
+        android:layout_alignBottom="@+id/tv_settings"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="-145dp"
+        app:srcCompat="@drawable/icon_message" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iv_message"
+        android:layout_alignLeft="@+id/iv_message"
+        android:layout_alignEnd="@+id/iv_message"
+        android:layout_alignRight="@+id/iv_message"
+        android:layout_alignBottom="@+id/iv_message"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:gravity="center"
+        android:layout_marginBottom="-20dp"
+        android:text="消息" />
+
+
+</RelativeLayout>

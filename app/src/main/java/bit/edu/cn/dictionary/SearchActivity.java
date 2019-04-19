@@ -166,7 +166,7 @@ public class SearchActivity extends AppCompatActivity {
             return ;
 
         final String URL_temp = NetworkUtils.Search_Word1 + Word_temp + NetworkUtils.Search_Word2;
-
+        Log.v(TAG,URL_temp.toString());
         Thread thread = new Thread(new Runnable() {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
