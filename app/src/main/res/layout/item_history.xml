@@ -9,11 +9,11 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/text_word"
+        android:id="@+id/tv_history_word"
         android:layout_width="326dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="24dp"
         android:layout_toLeftOf="@+id/delete"
         android:textColor="#1e1e1e"
         android:textSize="18sp"
@@ -23,8 +23,8 @@
         android:id="@+id/text_interpret"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_word"
-        android:layout_alignLeft="@id/text_word"
+        android:layout_below="@id/tv_history_word"
+        android:layout_alignLeft="@id/tv_history_word"
         android:layout_marginTop="4dp"
         android:textColor="#808080"
         android:textSize="14sp"
@@ -32,9 +32,12 @@
 
     <ImageButton
         android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/text_interpret"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="8dp"
         android:background="@null"
         android:padding="8dp"
         android:scaleType="centerInside"

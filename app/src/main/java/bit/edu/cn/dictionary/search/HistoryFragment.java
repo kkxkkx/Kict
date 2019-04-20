@@ -28,14 +28,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(view!=null){
-            ViewGroup group=(ViewGroup)view.getParent();
-            if(group!=null){
-                //如果不为空，先从group移去，避免出现空白页面
-                group.removeView(view);
-            }
-            return view;
-        }
         Log.v(TAG,"create");
         view=inflater.inflate(R.layout.fragment_history, container,false);
         initRecyclerView();

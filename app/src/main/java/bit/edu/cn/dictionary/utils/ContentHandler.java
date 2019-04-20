@@ -50,9 +50,9 @@ public class ContentHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch,int start,int length)
             throws SAXException{
-       super.characters(ch, start, length);
-       //转化为String
-       String value=new String(ch,start,length);
+        super.characters(ch, start, length);
+        //转化为String
+        String value=new String(ch,start,length);
 
         if(length<=0)
             return;
@@ -71,10 +71,10 @@ public class ContentHandler extends DefaultHandler {
         else if("ps".equals(nodename)){
             if(word.getPsE().length()<=0){
                 Log.v(TAG,value);
-                word.setPsE("英/"+value+"/");
+                word.setPsE("/"+value+"/");
             }else{
 
-                word.setPsA("美/"+value+"/");
+                word.setPsA("/"+value+"/");
             }
         }
 
@@ -109,11 +109,11 @@ public class ContentHandler extends DefaultHandler {
         else if("trans".equals(nodename)){
             word.setTrans(value+"\n");
         }
-      //TODO 中文翻译成英文这一块暂缺
+        //TODO 中文翻译成英文这一块暂缺
     }
 
     //在完成整个XML解析时调用
-   @Override
+    @Override
     public void endDocument() throws SAXException{
         super.endDocument();
         //TODO 目前还不能翻译中文
@@ -125,5 +125,5 @@ public class ContentHandler extends DefaultHandler {
             word.setInterpret(new String(valueArray,0,
                     interpret.length()-1));
         }
-   }
+    }
 }

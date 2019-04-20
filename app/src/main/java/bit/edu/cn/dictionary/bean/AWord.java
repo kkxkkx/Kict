@@ -10,8 +10,7 @@ public class AWord {
     //origs是例句，trans是例句的翻译,interpret是单词的翻译
     private String interpret=null;
     private String[] Origs,Trans;
-    private int Origsnum=0;
-    private int Transnum=0;
+    private int SentenceNum=0;
 
     //state记录这个单词有没有加入生词本
     public State state=NOTSAVE;
@@ -27,16 +26,12 @@ public class AWord {
         this.psA = "";
         this.pronA = "";
         this.interpret = "";
-        this.Origs[Origsnum] ="";
-        this.Trans[Transnum] ="";
+        this.Origs[SentenceNum] ="";
+        this.Trans[SentenceNum] ="";
         this.state= NOTSAVE;
     }
 
-    public  int getTransnum(){return Transnum;}
-    public void setTransnum(int num){Transnum=num;}
-
-    public int getOrigsnum(){return Origsnum;}
-    public void setOrigsnum(int num){Origsnum=num;}
+    public int getSentenceNum(){return SentenceNum;}
 
     public void setKey(String key){this.key=key;}
     public String getKey(){return key;}
@@ -53,10 +48,10 @@ public class AWord {
     public void setPronE(String pronE){this.pronE=pronE;}
     public String getPronE(){return pronE;}
 
-    public void setOrigs(String origs){this.Origs[Origsnum++]=origs;}
+    public void setOrigs(String origs){this.Origs[SentenceNum]=origs;}
     public String getOrigs(int num){return Origs[num];}
 
-    public void setTrans(String trans){this.Trans[Transnum++]=trans;}
+    public void setTrans(String trans){this.Trans[SentenceNum++]=trans;}
     public String getTrans(int num){return Trans[num];}
 
     public void setInterpret(String interpret){this.interpret=interpret;}

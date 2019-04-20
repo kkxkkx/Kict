@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages>
+    <message> <!--元素  即 对象 -->
+        <string>Primary</string>
+    </message>
+    <message>
+        <string>Pink</string>
+    </message>
+    <message>
+        <string>Green</string>
+    </message>
+    <message>
+        <string>Blue</string>
+    </message>
+    <message>
+        <string>Dark</string>
+    </message>
+</messages>

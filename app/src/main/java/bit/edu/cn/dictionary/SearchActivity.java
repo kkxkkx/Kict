@@ -6,9 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -16,9 +20,13 @@ import android.widget.TextView;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import bit.edu.cn.dictionary.adapter.SentenceAdapter;
+import bit.edu.cn.dictionary.adapter.ThemeAdapter;
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.Page;
 import bit.edu.cn.dictionary.db.HistoryWord;
@@ -33,6 +41,7 @@ import static bit.edu.cn.dictionary.bean.Page.HistoryInfo;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.search.HistoryFragment.HisAdapter;
+import static bit.edu.cn.dictionary.search.WordFragment.sentence_adapter;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -46,15 +55,26 @@ public class SearchActivity extends AppCompatActivity {
     private WordFragment wordFragment = null;
     private HistoryFragment historyFragment = null;
     private EmptyFragment empty=null;
-    public EditText mEditTextSearch;
 
     private TextView btn_back=null;
     public  SaveWord saveWord;
     public HistoryWord historyWord;
 
+
+    public RecyclerView sentence_list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorWhite));
+        }
+        setStatusBarLightMode();
+
         setContentView(R.layout.acitivity_search);
 
         btn_back=findViewById(R.id.cancel);
@@ -64,8 +84,6 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-      //  mEditTextSearch=findViewById(R.id.et_search);
 
 
         saveWord=new SaveWord(this);
@@ -122,6 +140,22 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+    private void setStatusBarLightMode() {
+        if (this.getWindow() != null) {
+            Class clazz = this.getWindow().getClass();
+            try {
+                int darkModeFlag = 0;
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                extraFlagField.invoke(this.getWindow(), darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void switchFragment(Page page)
     {
         FragmentManager fm=getFragmentManager();
@@ -155,6 +189,7 @@ public class SearchActivity extends AppCompatActivity {
             return true;
     }
 
+
     //对输入的单词进行搜索
     public void getWordFromInternet() {
 
@@ -187,14 +222,17 @@ public class SearchActivity extends AppCompatActivity {
                                 if(saveWord.IsSaved(searchword))
                                 {
                                     Log.v(TAG,"refreshUI");
-                                    wordFragment.word_state.setImageResource(R.drawable.saved);
+                                    wordFragment.iv_state.setImageResource(R.drawable.saved);
                                 }
                                 else {
                                     Log.v(TAG,"refreshUI");
-                                    wordFragment.word_state.setImageResource(R.drawable.tosave);
-
+                                    wordFragment.iv_state.setImageResource(R.drawable.tosave);
                                 }
-                                wordFragment.word_info.setText(Word_Now.getKey()+"\n"+Word_Now.getPsA()+"  "+Word_Now.getPsE()+"\n"+Word_Now.getInterpret());
+                                sentence_adapter.refresh(SentenceAdapter.LoadSentence(Word_Now));
+                                wordFragment.tv_word.setText(Word_Now.getKey());
+                                wordFragment.tv_pron_us.setText(Word_Now.getPsA());
+                                wordFragment.tv_pron_uk.setText(Word_Now.getPsE());
+                                wordFragment.tv_interpret.setText(Word_Now.getInterpret());
 
                             }
                         };

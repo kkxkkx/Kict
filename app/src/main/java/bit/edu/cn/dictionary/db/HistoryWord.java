@@ -118,7 +118,8 @@ public class HistoryWord {
                 return false;
             ContentValues contentValues = new ContentValues();
             contentValues.put(HistoryContract.HistoryInfo.COLUMN_WORD, w.getKey());
-            contentValues.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET, w.getInterpret());
+            String[] ss = w.getInterpret().split("\n");
+            contentValues.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET, ss[0]);
             contentValues.put(HistoryContract.HistoryInfo.COlUMN_DATE, System.currentTimeMillis());
             db.update(HistoryContract.HistoryInfo.TABLE_NAME, contentValues, selection, selectionArgs);
         }finally {
@@ -138,7 +139,8 @@ public class HistoryWord {
         }
         ContentValues contentValue=new ContentValues();
         contentValue.put(HistoryContract.HistoryInfo.COlUMN_DATE,System.currentTimeMillis());
-        contentValue.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET,w.getInterpret());
+        String[] ss = w.getInterpret().split("\n");
+        contentValue.put(HistoryContract.HistoryInfo.COLUMN_INTERPRET,ss[0]);
         contentValue.put(HistoryContract.HistoryInfo.COLUMN_WORD,w.getKey());
         long rowId=db.insert(HistoryContract.HistoryInfo.TABLE_NAME,null,contentValue);
     }

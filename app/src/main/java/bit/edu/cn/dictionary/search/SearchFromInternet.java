@@ -1,5 +1,7 @@
 package bit.edu.cn.dictionary.search;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class SearchFromInternet {
 
         Thread thread = new Thread(new Runnable() {
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
 

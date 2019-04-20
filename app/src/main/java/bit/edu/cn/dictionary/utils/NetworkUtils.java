@@ -27,8 +27,7 @@ import bit.edu.cn.dictionary.bean.AWord;
 public class NetworkUtils {
 
     //用于查词的URL
-    public final static String Search_Word1 = "https://dict-" +
-            "co.iciba.com/api/dictionary.php?w=";
+    public final static String Search_Word1 = "https://dict-co.iciba.com/api/dictionary.php?w=";
     public final static String Search_Word2 = "&key=866085E8C4B3F7C1AB220880A51B031F";
     public final static String TAG="FetchXML";
 
