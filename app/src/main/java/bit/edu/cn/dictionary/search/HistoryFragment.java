@@ -14,7 +14,7 @@ import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.db.HistoryWord;
-import bit.edu.cn.dictionary.ui.HistoryAdapter;
+import bit.edu.cn.dictionary.adapter.HistoryAdapter;
 
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 
@@ -37,7 +37,7 @@ public class HistoryFragment extends Fragment {
             return view;
         }
         Log.v(TAG,"create");
-        view=inflater.inflate(R.layout.history_fragment, container,false);
+        view=inflater.inflate(R.layout.fragment_history, container,false);
         initRecyclerView();
         return view;
     }

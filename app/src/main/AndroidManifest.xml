@@ -24,6 +24,7 @@
         <activity android:name=".SearchActivity"></activity>
         <activity android:name=".SaveActivity"></activity>
         <activity android:name=".HomeAcitivity"></activity>
+        <activity android:name=".ThemeAcitivity"></activity>
     </application>
 
 </manifest>

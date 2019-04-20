@@ -21,7 +21,7 @@ public class EmptyFragment extends Fragment {
             }
             return view;
         }
-        view=inflater.inflate(R.layout.empty_fragment, container,false);
+        view=inflater.inflate(R.layout.fragment_empty, container,false);
         return view;
     }
 }

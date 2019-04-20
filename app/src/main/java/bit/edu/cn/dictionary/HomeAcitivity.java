@@ -4,12 +4,14 @@ import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 public class HomeAcitivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView iv_theme;
     private  ImageView iv_list;
+    private static final String TAG="HomeActcity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,11 @@ public class HomeAcitivity extends AppCompatActivity implements View.OnClickList
             case R.id.iv_list:
                 startActivity(new Intent(this, SaveActivity.class));
                 break;
-                
+            case R.id.iv_theme:
+                Log.v(TAG,"switch");
+                startActivity(new Intent(this, ThemeAcitivity.class));
+                break;
+
         }
     }
 }

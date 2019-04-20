@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import bit.edu.cn.dictionary.db.SaveWord;
-import bit.edu.cn.dictionary.ui.SaveAdapter;
+import bit.edu.cn.dictionary.adapter.SaveAdapter;
 
 public class SaveActivity extends AppCompatActivity {
 
@@ -36,9 +36,9 @@ public class SaveActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         getSupportActionBar().setTitle("");
-        saved_recycler=findViewById(R.id.saved_list);
+
+        saved_recycler=findViewById(R.id.save_list);
         saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         saved_recycler.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 

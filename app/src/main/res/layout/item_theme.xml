@@ -9,49 +9,52 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/iv_theme_select"
-        android:layout_width="257dp"
-        android:layout_height="59dp"
+        android:id="@+id/tv_theme_primary"
+        android:layout_width="249dp"
+        android:layout_height="42dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginRight="33dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginBottom="13dp"
-        android:textColor="#1e1e1e"
-        android:textSize="25sp"
+        android:textSize="20sp"
         tools:text="word" />
 
-    <ImageView
-        android:id="@+id/iv_color"
-        android:layout_width="39dp"
-        android:layout_height="39dp"
-        android:layout_alignBottom="@+id/iv_theme_select"
-        android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
-        android:layout_marginBottom="1dp"
-        android:layout_toStartOf="@+id/iv_theme_select"
-        android:layout_toLeftOf="@+id/iv_theme_select"
-        app:srcCompat="@color/colorDark" />
 
     <ImageView
         android:id="@+id/iv_frame"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignTop="@+id/iv_color"
-        android:layout_alignEnd="@+id/iv_color"
-        android:layout_alignRight="@+id/iv_color"
-        android:layout_alignBottom="@+id/iv_theme_select"
+        android:layout_alignBottom="@+id/tv_theme_primary"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/tv_theme_primary"
+        android:layout_toLeftOf="@+id/tv_theme_primary"
+        android:background="@drawable/icon_frame" />
+
+    <ImageView
+        android:id="@+id/iv_color"
+        android:layout_width="38dp"
+        android:layout_height="36dp"
+        android:layout_alignStart="@+id/iv_frame"
+        android:layout_alignLeft="@+id/iv_frame"
+        android:layout_alignTop="@+id/iv_frame"
+        android:layout_alignEnd="@+id/iv_frame"
+        android:layout_alignRight="@+id/iv_frame"
+        android:layout_alignBottom="@+id/iv_frame"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
-        android:layout_marginBottom="3dp"
-        android:layout_toStartOf="@+id/iv_theme_select"
-        android:layout_toLeftOf="@+id/iv_theme_select"
+        android:layout_marginBottom="2dp"
         app:srcCompat="@color/colorPrimary" />
+
 
 
 </RelativeLayout>

@@ -38,7 +38,7 @@ public class WordFragment extends Fragment {
         }
 
         Log.v(TAG,"oncreat");
-        view=inflater.inflate(R.layout.word_fragment, container,false);
+        view=inflater.inflate(R.layout.fragment_word, container,false);
         word_info=view.findViewById(R.id.textView);
         word_state=view.findViewById(R.id.ToSave);
 
