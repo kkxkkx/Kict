@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,23 +24,22 @@ import java.lang.reflect.Method;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import bit.edu.cn.dictionary.adapter.SentenceAdapter;
-import bit.edu.cn.dictionary.adapter.ThemeAdapter;
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.Page;
 import bit.edu.cn.dictionary.db.HistoryWord;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.search.EmptyFragment;
+import bit.edu.cn.dictionary.search.ErrorFragment;
 import bit.edu.cn.dictionary.search.HistoryFragment;
 import bit.edu.cn.dictionary.search.WordFragment;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
 import static bit.edu.cn.dictionary.bean.Page.EMPTY;
+import static bit.edu.cn.dictionary.bean.Page.ERROR;
 import static bit.edu.cn.dictionary.bean.Page.HistoryInfo;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.search.HistoryFragment.HisAdapter;
-import static bit.edu.cn.dictionary.search.WordFragment.sentence_adapter;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -52,17 +50,22 @@ public class SearchActivity extends AppCompatActivity {
     public SearchView searchView;
     public static AWord Word_Now=null;
 
-    private WordFragment wordFragment = null;
+    public static WordFragment wordFragment = null;
     private HistoryFragment historyFragment = null;
+    private ErrorFragment errorFragment=null;
     private EmptyFragment empty=null;
 
     private TextView btn_back=null;
-    public  SaveWord saveWord;
+    public static SaveWord saveWord;
     public HistoryWord historyWord;
+
+    public  boolean flag=true;
+
+
+    public static TextView et_searchview;
 
 
     public RecyclerView sentence_list;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.colorWhite));
         }
         setStatusBarLightMode();
+
 
         setContentView(R.layout.acitivity_search);
 
@@ -89,6 +93,7 @@ public class SearchActivity extends AppCompatActivity {
         saveWord=new SaveWord(this);
         wordFragment = new WordFragment();
         historyFragment = new HistoryFragment();
+        errorFragment=new ErrorFragment();
         empty=new EmptyFragment();
         switchFragment(HistoryInfo);
 
@@ -96,6 +101,9 @@ public class SearchActivity extends AppCompatActivity {
 
         searchView = findViewById(R.id.searchView);
         searchView.onActionViewExpanded();
+
+        int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        et_searchview= (EditText )searchView.findViewById(id);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -111,7 +119,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if(s.length()!=0)
-                    switchFragment(EMPTY);
+                {
+                    if(flag)
+                        switchFragment(EMPTY);
+                }
                 else
                 {
                     HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
@@ -131,6 +142,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
     }
+
 
 
     @Override
@@ -164,6 +176,7 @@ public class SearchActivity extends AppCompatActivity {
         FragmentTransaction ft=fm.beginTransaction();
         switch (page){
             case WORDINFO:
+                searchView.clearFocus();
                 ft.replace(R.id.fragment_container,wordFragment);
                 ft.addToBackStack(null);
                 break;
@@ -173,6 +186,10 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case HistoryInfo:
                 ft.replace(R.id.fragment_container,historyFragment);
+                ft.addToBackStack(null);
+                break;
+            case ERROR:
+                ft.replace(R.id.fragment_container,errorFragment);
                 ft.addToBackStack(null);
                 break;
         }
@@ -192,7 +209,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //对输入的单词进行搜索
     public void getWordFromInternet() {
-
+        flag=true;
         final String Word_temp = searchword;
         if (Word_temp == null || Word_temp.equals(""))
             return ;
@@ -201,7 +218,6 @@ public class SearchActivity extends AppCompatActivity {
             return ;
 
         final String URL_temp = NetworkUtils.Search_Word1 + Word_temp + NetworkUtils.Search_Word2;
-        Log.v(TAG,URL_temp.toString());
         Thread thread = new Thread(new Runnable() {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -209,46 +225,28 @@ public class SearchActivity extends AppCompatActivity {
             public void run() {
 
                 try {
-                    Log.v(TAG, "start thread");
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
                     if (Word_Now == null)
-                    {
-
-                    } else {
+                        switchFragment(ERROR);
+                     else {
                         Runnable updateUIControl=new Runnable() {
                             @Override
                             public void run() {
-
-                                if(saveWord.IsSaved(searchword))
-                                {
-                                    Log.v(TAG,"refreshUI");
-                                    wordFragment.iv_state.setImageResource(R.drawable.saved);
-                                }
-                                else {
-                                    Log.v(TAG,"refreshUI");
-                                    wordFragment.iv_state.setImageResource(R.drawable.tosave);
-                                }
-                                sentence_adapter.refresh(SentenceAdapter.LoadSentence(Word_Now));
-                                wordFragment.tv_word.setText(Word_Now.getKey());
-                                wordFragment.tv_pron_us.setText(Word_Now.getPsA());
-                                wordFragment.tv_pron_uk.setText(Word_Now.getPsE());
-                                wordFragment.tv_interpret.setText(Word_Now.getInterpret());
-
+                               wordFragment.refresh();
                             }
                         };
                         SearchActivity.this.runOnUiThread(updateUIControl);
                         HistoryWord history=new HistoryWord(getBaseContext());
-
                         if(!history.IsExistDB(Word_Now))
                             history.saveInfoDatabase(Word_Now);
                         Word_Now.setState(NOTSAVE);
                         Log.v(TAG, String.valueOf(Word_Now.getState()));
                     }
-                } catch (IOException e) {
+                } catch (SAXException e) {
                     e.printStackTrace();
                 } catch (ParserConfigurationException e) {
                     e.printStackTrace();
-                } catch (SAXException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
@@ -256,5 +254,10 @@ public class SearchActivity extends AppCompatActivity {
         });
         thread.start();
     }
+
+
+
 }
+
+
 

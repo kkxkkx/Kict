@@ -9,5 +9,6 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:text="SEDrtfyguhiopsdfghjikol[dftgyuhjiopk[eeertyuiopoihgcfghoiugfcghjuikopgfcvhjklogvhjiopfguyiop"
         tools:layout_editor_absoluteY="120dp" />
 </android.support.constraint.ConstraintLayout>

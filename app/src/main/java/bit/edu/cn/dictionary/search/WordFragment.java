@@ -16,6 +16,8 @@ import bit.edu.cn.dictionary.adapter.SentenceAdapter;
 import bit.edu.cn.dictionary.db.SaveWord;
 
 import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
+import static bit.edu.cn.dictionary.SearchActivity.saveWord;
+import static bit.edu.cn.dictionary.SearchActivity.searchword;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.bean.State.SAVED;
 
@@ -29,7 +31,7 @@ public class WordFragment extends Fragment {
     public TextView tv_interpret;
     public ImageView iv_state;
     public RecyclerView sentence_list;
-    public static SentenceAdapter sentence_adapter;
+    public  SentenceAdapter sentence_adapter;
 
     public final static String TAG="WordFragment";
 
@@ -83,6 +85,27 @@ public class WordFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void refresh()
+    {
+
+        Log.v("iv_state", String.valueOf(iv_state));
+        if(saveWord.IsSaved(searchword))
+        {
+            Log.v(TAG,"refreshUI");
+            iv_state.setImageResource(R.drawable.saved);
+        }
+        else {
+            Log.v(TAG,"refreshUI");
+            iv_state.setImageResource(R.drawable.tosave);
+        }
+
+        tv_word.setText(Word_Now.getKey());
+        tv_pron_us.setText(Word_Now.getPsA());
+        tv_pron_uk.setText(Word_Now.getPsE());
+        tv_interpret.setText(Word_Now.getInterpret());
+        sentence_adapter.refresh(SentenceAdapter.LoadSentence(Word_Now));
     }
 
 

@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 
 import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.SearchActivity;
+import bit.edu.cn.dictionary.adapter.HistoryAdapter;
 import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.db.HistoryWord;
-import bit.edu.cn.dictionary.adapter.HistoryAdapter;
 
+import static bit.edu.cn.dictionary.SearchActivity.et_searchview;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 
 public class HistoryFragment extends Fragment {
@@ -54,10 +55,11 @@ public class HistoryFragment extends Fragment {
             public void changeFragment(String s) {
                 Log.v(TAG,"search");
                 SearchActivity search=(SearchActivity)getActivity();
-
                 SearchActivity.searchword =s;
                 search.getWordFromInternet();
+                search.flag=false;
                 search.switchFragment(WORDINFO);
+                et_searchview.setText(s);
             }
         });
 
