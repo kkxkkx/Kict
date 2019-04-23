@@ -1,7 +1,9 @@
 package bit.edu.cn.dictionary.search;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import bit.edu.cn.dictionary.R;
+import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.adapter.SentenceAdapter;
 import bit.edu.cn.dictionary.db.SaveWord;
 
@@ -32,6 +36,8 @@ public class WordFragment extends Fragment {
     public ImageView iv_state;
     public RecyclerView sentence_list;
     public  SentenceAdapter sentence_adapter;
+    private LinearLayout llContentView;
+    private LayoutInflater mInflater;
 
     public final static String TAG="WordFragment";
 
@@ -47,7 +53,7 @@ public class WordFragment extends Fragment {
         tv_pron_us=view.findViewById(R.id.tv_pron_us);
         tv_word=view.findViewById(R.id.tv_history_word);
         iv_state=view.findViewById(R.id.iv_save);
-
+       // llContentView=view.findViewById(R.id.ll);
 
         sentence_list = view.findViewById(R.id.sentence_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -86,6 +92,7 @@ public class WordFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
 
     public void refresh()
     {

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/word_list"
+        android:id="@+id/word_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/theme_list"
@@ -18,14 +18,15 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp" >
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
+            android:id="@+id/word_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="生词本"/>
+            android:text="生词本"
+            android:textSize="20sp" />
 
     </android.support.v7.widget.Toolbar>
 

@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ import bit.edu.cn.dictionary.search.EmptyFragment;
 import bit.edu.cn.dictionary.search.ErrorFragment;
 import bit.edu.cn.dictionary.search.HistoryFragment;
 import bit.edu.cn.dictionary.search.WordFragment;
+import bit.edu.cn.dictionary.utils.AudioUtils;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
 import static bit.edu.cn.dictionary.bean.Page.EMPTY;
@@ -59,6 +62,9 @@ public class SearchActivity extends AppCompatActivity {
     public static SaveWord saveWord;
     public HistoryWord historyWord;
 
+
+    private LinearLayout llContentView;
+    private LayoutInflater mInflater;
     public  boolean flag=true;
 
 
@@ -226,6 +232,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 try {
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
+                    //AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
+                    //AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_us");
+
                     if (Word_Now == null)
                         switchFragment(ERROR);
                      else {
@@ -255,6 +264,19 @@ public class SearchActivity extends AppCompatActivity {
         thread.start();
     }
 
+    public void refresh()
+    {
+//        mInflater=LayoutInflater.from(this);
+//        if(Word_Now!=null)
+//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_word,null));
+//        if(Word_Now.getPsA()!=null)
+//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_pron,null));
+//        if(Word_Now.getInterpret()!=null)
+//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_interpret,null));
+//        wordFragment.tv_word.setText(Word_Now.getKey());
+        //        if(Word_Now.getSentenceNum()!=0)
+//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_sentence,null));
+    }
 
 
 }

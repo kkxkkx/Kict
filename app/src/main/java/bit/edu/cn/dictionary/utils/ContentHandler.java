@@ -43,17 +43,12 @@ public class ContentHandler extends DefaultHandler {
     public void startElement(String uri, String localnName,
                              String qName, Attributes attributes) {
         nodename=localnName;  //把当前的标签记录下来
-
     }
 
     //开始提取节点中的内容
     @Override
-    public void characters(char[] ch,int start,int length)
-            throws SAXException{
+    public void characters(char[] ch,int start,int length) throws SAXException{
         super.characters(ch, start, length);
-        //转化为String
-        String value=new String(ch,start,length);
-
         if(length<=0)
             return;
         for(int i=start;i<start+length;i++){
@@ -61,13 +56,13 @@ public class ContentHandler extends DefaultHandler {
                 return;
         }
 
+        String value=new String(ch,start,length);
         //对具体的每一行进行解析
         if("key".equals(nodename)){
 
             word.setKey(value);
         }
         //ps为发音，有两种情况
-        // TODO 下面两个if假设E出现在A后面，要根据页面进行调整
         else if("ps".equals(nodename)){
             if(word.getPsE().length()<=0){
                 Log.v(TAG,value);
@@ -96,7 +91,11 @@ public class ContentHandler extends DefaultHandler {
         }
         //acception是翻译
         else if("acceptation".equals(nodename)){
-            interpret+=value+"\n";
+            int i=value.indexOf("；");
+            if(i>0)
+                interpret+=value+'\n';
+            else
+                interpret+=value;
             interpret=word.getInterpret()+interpret;
             word.setInterpret(interpret);
             interpret="";

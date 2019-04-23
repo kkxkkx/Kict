@@ -7,6 +7,12 @@ public class RecentWord {
     private String word=null;
     private Date date;
     public long id;
+    private boolean isChecked=false;
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+    public boolean isChecked(){return isChecked;}
 
     public RecentWord(long id) { this.id = id; }
 

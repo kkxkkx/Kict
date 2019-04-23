@@ -5,6 +5,8 @@
     <string name="action_edit">edit</string>
     <string name="action_debug">Debug</string>
     <string name="action_card">card</string>
+    <string name="toolbar_title">生词本</string>
+    <string name="toolbar_delete">all selected</string>
 
 
 </resources>

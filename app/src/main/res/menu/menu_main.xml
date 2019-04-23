@@ -4,6 +4,18 @@
     tools:context="com.camp.bit.todolist.MainActivity">
 
     <item
+        android:id="@+id/select_all"
+        android:title="ALL"
+        android:icon="@drawable/ic_all_select"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/delete_note"
+        android:title=""
+        android:icon="@drawable/ic_delete_list"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_edit"

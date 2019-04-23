@@ -12,13 +12,19 @@ import android.widget.TextView;
 import java.util.List;
 
 import bit.edu.cn.dictionary.R;
+import bit.edu.cn.dictionary.ThemeOperator;
+import bit.edu.cn.dictionary.bean.RecentWord;
+import bit.edu.cn.dictionary.search.HistoryOperator;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder> {
 
     private static final String TAG="ThemeAdapter";
+    private ThemeOperator operator;
     List datas;
-    public ThemeAdapter(List<String> messages){
+
+    public ThemeAdapter(List<String> messages, ThemeOperator operator){
         datas=messages;
+        this.operator=operator;
     }
 
     private String data;
@@ -28,7 +34,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
     public ThemeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_theme,viewGroup,false);
-        ThemeAdapter.ThemeViewHolder viewHolder=new ThemeAdapter.ThemeViewHolder(view);
+        ThemeAdapter.ThemeViewHolder viewHolder=new ThemeAdapter.ThemeViewHolder(view,operator);
         return viewHolder;
     }
 
@@ -59,6 +65,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
         viewHolder.iv_color.setImageResource(drawableId);
         viewHolder.iv_color.bringToFront();
         viewHolder.tv_theme_select.setText(data);
+        viewHolder.bind(data);
     }
 
     @Override
@@ -71,11 +78,24 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
 
         TextView tv_theme_select;
         ImageView iv_color;
-        public ThemeViewHolder(@NonNull View itemView) {
+        private final ThemeOperator operator;
+
+        public ThemeViewHolder(@NonNull View itemView,final ThemeOperator operator) {
             super(itemView);
+            this.operator=operator;
             iv_color=(ImageView)itemView.findViewById(R.id.iv_color);
             tv_theme_select=(TextView)itemView.findViewById(R.id.tv_theme_primary);
 
+        }
+
+        public void bind(final String type){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v(TAG,"search");
+                    operator.changeTheme(type);
+                }
+            });
         }
     }
 }

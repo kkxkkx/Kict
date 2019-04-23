@@ -66,7 +66,7 @@ public class HomeAcitivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.iv_theme:
                 Log.v(TAG,"switch");
-                startActivity(new Intent(this, ThemeAcitivity.class));
+                startActivity(new Intent(this, ThemeActivity.class));
                 break;
             case R.id.iv_back:
                 Log.v(TAG,"finish this activity");

@@ -3,7 +3,6 @@ package bit.edu.cn.dictionary.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     private final HistoryOperator operator;
     private final List<RecentWord> words=new ArrayList<>();
-    private SparseArray<View> mFooterViews;;
-    private static int BASE_ITEM_TYPE_FOOTER = 20000000;
-
-    private RecyclerView.Adapter mAdapter;
 
 
     public HistoryAdapter(HistoryOperator operator){
@@ -58,6 +53,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         return words.size();
     }
 
+
+
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         private TextView wordText;
@@ -72,7 +69,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             wordText=itemView.findViewById(R.id.tv_history_word);
             interpretText=itemView.findViewById(R.id.text_interpret);
             deleteBtn=itemView.findViewById(R.id.delete);
-
         }
 
 
