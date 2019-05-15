@@ -6,7 +6,7 @@
     <item
         android:id="@+id/select_all"
         android:title="ALL"
-        android:icon="@drawable/ic_all_select"
+        android:icon="@drawable/ic_wait_to_check"
         app:showAsAction="always"/>
     <item
         android:id="@+id/delete_note"

@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         REQUEST_CODE_ADD);
                 break;
             case R.id.WordBook:
-                startActivity(new Intent(this, SaveActivity.class));
+                startActivity(new Intent(this, ListActivity.class));
                 break;
             case R.id.home:
                 Log.v(TAG,"home");

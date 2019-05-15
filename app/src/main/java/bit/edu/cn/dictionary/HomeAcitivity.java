@@ -62,7 +62,7 @@ public class HomeAcitivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_list:
-                startActivity(new Intent(this, SaveActivity.class));
+                startActivity(new Intent(this, ListActivity.class));
                 break;
             case R.id.iv_theme:
                 Log.v(TAG,"switch");

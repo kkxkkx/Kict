@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,25 +19,26 @@ import android.widget.TextView;
 
 import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.db.SaveWord;
-import bit.edu.cn.dictionary.adapter.SaveAdapter;
+import bit.edu.cn.dictionary.adapter.ListAdapter;
 import bit.edu.cn.dictionary.notification.CheckboxChangeListener;
 import bit.edu.cn.dictionary.notification.ItemClickListener;
 import bit.edu.cn.dictionary.notification.ItemLongClickListener;
 
-import static bit.edu.cn.dictionary.adapter.SaveAdapter.words;
+import static bit.edu.cn.dictionary.adapter.ListAdapter.words;
 
-public class SaveActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     public static final String TAG="Save_Activity";
-    public  SaveAdapter saveAdapter;
+    public  ListAdapter ListAdapter;
     public RecyclerView saved_recycler;
     public TextView toolbar_title;
-    public SaveWord saveWord;
+    public SaveWord saveWord;  //单词本中的单词
     public Toolbar toolbar;
     public static boolean edit_state=false;
     private static boolean mIsDeleteMode = false;
 
     private MenuItem mDeleteWord;
+    private boolean isLong=false;  //激发方式
     private MenuItem mSelectAll;
 
     @Override
@@ -51,17 +53,13 @@ public class SaveActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+
+        //toolbar的监听
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isDeleteMode()){
-                    toolbar.setNavigationIcon(R.drawable.ic_back_black);
-                    changeDeleteMode(false);
-                    for(int i=0;i<words.size();i++)
-                    {
-                        words.get(i).setChecked(false);
-                    }
-                    saveAdapter.notifyDataSetChanged();
+                    BackToNormal();
                 }
                 else{
                     finish();
@@ -70,44 +68,47 @@ public class SaveActivity extends AppCompatActivity {
         });
 
 
-
-
+        //生词本的recyclerView
         saved_recycler=findViewById(R.id.save_list);
         saved_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         saved_recycler.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         saved_recycler.setItemAnimator(new DefaultItemAnimator());
 
-        saveAdapter=new SaveAdapter();
+        ListAdapter=new ListAdapter();
 
-        saveAdapter.setmListener(new ItemClickListener(){
+        ListAdapter.setmListener(new ItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
                 RecentWord reword=words.get(position);
                 if(!mIsDeleteMode){
-                    //todo 正常情况没有写
+                    //todo 正常情况没有写,单击打开一个card界面
                     Log.v("click", String.valueOf(mIsDeleteMode));
                 }else{
-                    reword.setChecked(!reword.isChecked());
-                    SaveAdapter.SaveViewHolder viewHolder=new SaveAdapter.SaveViewHolder(view);
-                    viewHolder.getCheckBox().setChecked(reword.isChecked());
+                    Log.v("item click","");
+                    checkbox(view,position);
                 }
             }
         });
 
-        saveAdapter.setMlonglistener(new ItemLongClickListener() {
+
+        //监听长按
+        ListAdapter.setMlonglistener(new ItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
+                isLong=true;
                 Log.v("long click", String.valueOf(mIsDeleteMode));
                 changeDeleteMode(true);
                 toolbar.setNavigationIcon(R.drawable.ic_delete);
                 RecentWord reword=words.get(position);
                 reword.setChecked(true);
-                saveAdapter.notifyDataSetChanged();
+                ListAdapter.SaveViewHolder viewHolder=new ListAdapter.SaveViewHolder(view);
+                viewHolder.getCheckBox().setChecked(reword.isChecked());
+                ListAdapter.notifyDataSetChanged();
             }
         });
 
 
-        saveAdapter.setMyCheckboxListener(new CheckboxChangeListener() {
+        ListAdapter.setMyCheckboxListener(new CheckboxChangeListener() {
             @Override
             public void onChanged() {
                 int checkNum=0;
@@ -116,26 +117,45 @@ public class SaveActivity extends AppCompatActivity {
                         checkNum++;
                     }
                 }
-                Log.v(TAG, checkNum+":"+String.valueOf(checkNum));
-                if(mSelectAll!=null){
-                    if(checkNum==words.size()&&"ALL".equals(mSelectAll.getTitle())){
-                        toolbar_title.setText(R.string.toolbar_delete);
-                        mSelectAll.setTitle("NOT ALL");
-                        mSelectAll.setIcon(R.drawable.ic_all_select_already);
+                if(checkNum==0&&isLong)   //如果是长按激发的，没有勾选时退出
+                {
+                    BackToNormal();
+                }
+                else {
+                    if(checkNum==0)
+                    {
+                        mDeleteWord.setEnabled(false);
+                        mDeleteWord.setIcon(R.drawable.ic_delete_list_not);
+                    }else{
+                        mDeleteWord.setEnabled(true);
+                        mDeleteWord.setIcon(R.drawable.ic_delete_list);
                     }
-                    if(checkNum<words.size()&&"NOT ALL".equals(mSelectAll.getTitle())){
-                        toolbar_title.setText("");
-                        mSelectAll.setTitle("ALL");
-                        mSelectAll.setIcon(R.drawable.ic_all_select);
+                    Log.v(TAG, "checkNum:" + String.valueOf(checkNum));
+                    if (mSelectAll != null) {
+                        if (checkNum == words.size() && "ALL".equals(mSelectAll.getTitle())) {
+                            toolbar_title.setText(R.string.toolbar_delete);
+                            mSelectAll.setTitle("NOT ALL");    //下一次只能匹配NOT ALL
+                            mSelectAll.setIcon(R.drawable.ic_select_all);
+                        }
+                        if (checkNum < words.size() && "NOT ALL".equals(mSelectAll.getTitle())) {
+                            toolbar_title.setText("");
+                            mSelectAll.setTitle("ALL");
+                            mSelectAll.setIcon(R.drawable.ic_wait_to_check);
+                        }
                     }
                 }
                 Log.v(TAG, String.valueOf(mSelectAll.getTitle()));
             }
+
+            @Override
+            public void onCheckClick(View view, int position) {
+                checkbox(view,position);
+            }
         });
 
-        saved_recycler.setAdapter(saveAdapter);
+        saved_recycler.setAdapter(ListAdapter);
         saveWord=new SaveWord(this);
-        saveAdapter.refresh(saveWord.LoadFromSavedDB());
+        ListAdapter.refresh(saveWord.LoadFromSavedDB());
 
     }
 
@@ -155,11 +175,12 @@ public class SaveActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
-                //TODO 点击edit进行编辑有问题
                 changeDeleteMode(true);
                 toolbar.setNavigationIcon(R.drawable.ic_delete);
-
+                ListAdapter.notifyDataSetChanged();
+                isLong=false;
                 break;
+
             case R.id.action_debug:
                 return true;
             case R.id.action_card:
@@ -171,6 +192,7 @@ public class SaveActivity extends AppCompatActivity {
                     if(words.get(i).isChecked())
                         checkNum++;
                 }
+                if(checkNum!=0)
                 createAlertDialog(checkNum);
                 break;
 
@@ -180,22 +202,21 @@ public class SaveActivity extends AppCompatActivity {
                     Log.d(TAG, "select_all！！！！");
                     for(int i=0;i<words.size();i++){
                         words.get(i).setChecked(false);
-                        toolbar.setNavigationIcon(R.drawable.ic_back_black);
-                        changeDeleteMode(false);
                     }
                 }else {   //全选的时候
+                    isLong=false;
                     toolbar_title.setText(R.string.toolbar_delete);
                     for (int i = 0; i < words.size(); i++) {
                         words.get(i).setChecked(true);
                         Log.v(TAG, String.valueOf(words.get(i).isChecked()));
                         View view = saved_recycler.getChildAt(i);
                         if (view != null) {
-                            SaveAdapter.SaveViewHolder viewHolder = new SaveAdapter.SaveViewHolder(view);
+                            ListAdapter.SaveViewHolder viewHolder = new ListAdapter.SaveViewHolder(view);
                             viewHolder.getCheckBox().setChecked(true);
                         }
                     }
                 }
-                saveAdapter.notifyDataSetChanged();
+                ListAdapter.notifyDataSetChanged();
                 break;
             default:
                 break;
@@ -206,7 +227,7 @@ public class SaveActivity extends AppCompatActivity {
 
 
     protected void createAlertDialog(int number) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SaveActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
         builder.setTitle("Delete");
         builder.setMessage("Are you sure you want to delete " + number + (number > 1 ? " items?" : " item?"));
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -217,7 +238,7 @@ public class SaveActivity extends AppCompatActivity {
                         saveWord.deleteWord(words.get(i).getWord());
                     }
                 }
-                saveAdapter.refresh(saveWord.LoadFromSavedDB());
+                ListAdapter.refresh(saveWord.LoadFromSavedDB());
                 changeDeleteMode(false);
                 toolbar.setNavigationIcon(R.drawable.ic_back_black);
                 dialog.dismiss();
@@ -246,6 +267,41 @@ public class SaveActivity extends AppCompatActivity {
         } else {
             toolbar_title.setText(R.string.toolbar_title);
         }
+    }
+
+    public void BackToNormal()
+    {
+        toolbar.setNavigationIcon(R.drawable.ic_back_black);
+        changeDeleteMode(false);
+        toolbar_title.setText(R.string.toolbar_title);
+        for(int i=0;i<words.size();i++)
+        {
+            words.get(i).setChecked(false);
+        }
+        ListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode== KeyEvent.KEYCODE_BACK) {
+            changeDeleteMode(false);
+            for (int i = 0; i < words.size(); i++) {
+                words.get(i).setChecked(false);
+            }
+            finish();
+        }
+        Log.v(TAG,"back");
+        return true;
+    }
+
+    public void checkbox(View view,int position)
+    {
+        RecentWord reword=words.get(position);
+        reword.setChecked(!reword.isChecked());
+        Log.v(TAG, String.valueOf(reword.isChecked()));
+        ListAdapter.SaveViewHolder viewHolder=new ListAdapter.SaveViewHolder(view);
+        viewHolder.getCheckBox().setChecked(reword.isChecked());
     }
 
 }

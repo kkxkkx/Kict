@@ -18,15 +18,15 @@ import bit.edu.cn.dictionary.notification.ItemClickListener;
 import bit.edu.cn.dictionary.notification.ItemLongClickListener;
 import bit.edu.cn.dictionary.R;
 
-import bit.edu.cn.dictionary.SaveActivity;
+import bit.edu.cn.dictionary.ListActivity;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
-public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder> {
 
     private ItemClickListener mlistener;
     private ItemLongClickListener mlonglistener;
     private CheckboxChangeListener mchecklistener;
-    private static final String TAG = "SaveAdapter";
+    private static final String TAG = "ListAdapter";
     public static final List<RecentWord> words=new ArrayList<>();
 
     public void setmListener(ItemClickListener mListener){
@@ -61,12 +61,14 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.SaveViewHolder
     @Override
     public void onBindViewHolder(@NonNull final SaveViewHolder holder, int i) {
         final RecentWord reword=words.get(i);
-        holder.checkBox.setVisibility(SaveActivity.isDeleteMode()?View.VISIBLE:View.GONE);
+        holder.checkBox.setVisibility(ListActivity.isDeleteMode()?View.VISIBLE:View.GONE);
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //Log.v(TAG,"onCkeckedChangeListener");
+                Log.v("checkboxListener","");
                 mchecklistener.onChanged();
+               // int position=holder.getAdapterPosition();
+               // mchecklistener.onCheckClick(buttonView,position);
             }
         });
 
