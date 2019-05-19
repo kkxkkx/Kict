@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="生词本"
+            android:textColor="@color/colorBlack"
             android:textSize="20sp" />
 
     </android.support.v7.widget.Toolbar>

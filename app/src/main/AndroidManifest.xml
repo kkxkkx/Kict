@@ -26,6 +26,7 @@
         <activity android:name=".ListActivity"></activity>
         <activity android:name=".ThemeActivity"></activity>
         <activity android:name=".DebugActivity"></activity>
+        <activity android:name=".CardActivity"></activity>
     </application>
 
 </manifest>

@@ -1,49 +1,89 @@
 package bit.edu.cn.dictionary;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DebugActivity extends AppCompatActivity {
+import bit.edu.cn.dictionary.menu.NetSpeed;
+import bit.edu.cn.dictionary.menu.NetSpeedTimer;
+
+import static android.view.View.VISIBLE;
+
+public class DebugActivity extends  AppCompatActivity implements Callback {
 
     private static int REQUEST_CODE_STORAGE_PERMISSION = 1001;
+    private NetSpeedTimer mNetSpeedTimer;
+    private TextView InternetText;
+    private Toolbar info_toolbar;
+    private RelativeLayout re_speed;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
         setTitle(R.string.action_debug);
 
+        Handler handler = new Handler(this);
+        //创建NetSpeedTimer实例
+        mNetSpeedTimer = new NetSpeedTimer(this, new NetSpeed(), handler).setDelayTime(1000).setPeriodTime(2000);
+
+        info_toolbar=(Toolbar) findViewById(R.id.info_toolbar);
+        info_toolbar.setTitle("");
+        setSupportActionBar(info_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        re_speed=findViewById(R.id.re_speed);
+
+        info_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    finish();
+            }
+        });
+
         final Button printBtn = findViewById(R.id.btn_print_path);
         final TextView pathText = findViewById(R.id.text_path);
         printBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pathText.setVisibility(VISIBLE);
                 StringBuilder sb = new StringBuilder();
                 sb.append("===== Internal Private =====\n").append(getInternalPath())
                         .append("===== External Private =====\n").append(getExternalPrivatePath())
                         .append("===== External Public =====\n").append(getExternalPublicPath());
                 pathText.setText(sb);
+            }
+        });
+
+        final Button changeBtn=findViewById(R.id.change_net);
+        changeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
             }
         });
 
@@ -64,12 +104,14 @@ public class DebugActivity extends AppCompatActivity {
             }
         });
 
+
+        //打印实时网速
         final Button fileWriteBtn = findViewById(R.id.btn_write_files);
-        //final TextView fileText = findViewById(R.id.text_files);
+        InternetText = findViewById(R.id.text_files);
         fileWriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mNetSpeedTimer.startSpeedTimer();
             }
         });
     }
@@ -131,5 +173,32 @@ public class DebugActivity extends AppCompatActivity {
         }
         return sb.toString();
     }
+
+
+
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case NetSpeedTimer.NET_SPEED_TIMER_DEFAULT:
+                String speed = (String)msg.obj;
+                //打印你所需要的网速值，单位默认为kb/s
+                re_speed.setVisibility(VISIBLE);
+                InternetText.setText("speed ="+speed);
+                Log.i("current net speed", speed);
+                break;
+
+            default:
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(null != mNetSpeedTimer){
+            mNetSpeedTimer.stopSpeedTimer();
+        }
+        super.onDestroy();
+    }
+
 }
 

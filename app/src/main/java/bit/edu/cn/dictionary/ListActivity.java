@@ -18,11 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
-
+import bit.edu.cn.dictionary.adapter.ListAdapter;
 import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.db.SaveWord;
-import bit.edu.cn.dictionary.adapter.ListAdapter;
 import bit.edu.cn.dictionary.notification.CheckboxChangeListener;
 import bit.edu.cn.dictionary.notification.ItemClickListener;
 import bit.edu.cn.dictionary.notification.ItemLongClickListener;
