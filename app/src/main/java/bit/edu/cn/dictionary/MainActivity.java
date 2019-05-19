@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.home:
                 Log.v(TAG,"home");
-                startActivity(new Intent(this, HomeAcitivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 break;
         }
     }

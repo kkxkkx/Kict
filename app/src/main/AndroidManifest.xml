@@ -25,7 +25,7 @@
         <activity android:name=".SearchActivity"></activity>
         <activity android:name=".ListActivity"></activity>
         <activity android:name=".ThemeActivity"></activity>
-        <activity android:name=".HomeAcitivity"></activity>
+        <activity android:name=".DebugActivity"></activity>
     </application>
 
 </manifest>

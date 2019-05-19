@@ -1,6 +1,5 @@
 package bit.edu.cn.dictionary;
 
-import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class HomeAcitivity extends AppCompatActivity implements View.OnClickListener{
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView iv_theme;
     private  ImageView iv_list;
     private ImageView iv_back;
@@ -75,3 +74,4 @@ public class HomeAcitivity extends AppCompatActivity implements View.OnClickList
         }
     }
 }
+

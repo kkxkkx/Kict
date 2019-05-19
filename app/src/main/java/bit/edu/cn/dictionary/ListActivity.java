@@ -2,6 +2,7 @@ package bit.edu.cn.dictionary;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.List;
 
 import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.db.SaveWord;
@@ -90,6 +93,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        //ListAdapter.set
 
         //监听长按
         ListAdapter.setMlonglistener(new ItemLongClickListener() {
@@ -182,7 +186,8 @@ public class ListActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_debug:
-                return true;
+                startActivity(new Intent(this, DebugActivity.class));
+
             case R.id.action_card:
                 return true;
             case R.id.delete_note:

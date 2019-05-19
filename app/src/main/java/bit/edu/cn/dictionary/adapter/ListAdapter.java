@@ -32,6 +32,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder
     public void setmListener(ItemClickListener mListener){
         this.mlistener=mListener;
     }
+   // public void setMchecklistener()
     public void setMlonglistener(ItemLongClickListener mlonglistener){
         this.mlonglistener=mlonglistener;
     }
@@ -62,6 +63,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder
     public void onBindViewHolder(@NonNull final SaveViewHolder holder, int i) {
         final RecentWord reword=words.get(i);
         holder.checkBox.setVisibility(ListActivity.isDeleteMode()?View.VISIBLE:View.GONE);
+
+//        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+//                                               @Override
+//                                               public void onClick(View v) {
+//                                                   int position=holder.getAdapterPosition();
+//                                                    mchecklistener.onCheckClick(v,position);
+//                                               }
+//                                           }
+//        );
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

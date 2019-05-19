@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">Dictionary</string>
 
-    <!-- Main -->
+    <!-- List -->
     <string name="action_edit">edit</string>
     <string name="action_debug">Debug</string>
     <string name="action_card">card</string>
     <string name="toolbar_title">生词本</string>
     <string name="toolbar_delete">all selected</string>
 
+    <!-- Debug -->
+    <string name="print_absolute_path">Print absolute path</string>
+    <string name="request_storage_permission">Request Storage Permission</string>
+    <string name="write_to_file">Write to files</string>
+    <string name="write_to_file_hint">Display your content here</string>
 
 </resources>
