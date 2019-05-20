@@ -9,6 +9,7 @@ public class RecentWord {
     public long id;
     public boolean isFlipped=false;
     private boolean isChecked=false;
+    private String pron;
 
     public void setChecked(boolean checked) {
         isChecked = checked;
@@ -25,5 +26,8 @@ public class RecentWord {
 
     public void setWord(String word){this.word=word;}
     public String getWord(){return word;}
+
+    public  void setpron(String pron){this.pron=pron;}
+    public  String getpron(){return pron;}
 
 }

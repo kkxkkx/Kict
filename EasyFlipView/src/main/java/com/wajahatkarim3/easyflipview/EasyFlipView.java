@@ -188,7 +188,7 @@ public class EasyFlipView extends FrameLayout {
             mCardFrontLayout.setVisibility(VISIBLE);
 
             if (mCardBackLayout != null) {
-                mCardBackLayout.setVisibility(INVISIBLE);
+                mCardBackLayout.setVisibility(GONE);
             }
         }
     }
@@ -226,12 +226,12 @@ public class EasyFlipView extends FrameLayout {
 
                     if (mFlipState == FlipState.FRONT_SIDE)
                     {
-                        mCardBackLayout.setVisibility(INVISIBLE);
+                        mCardBackLayout.setVisibility(GONE);
                         mCardFrontLayout.setVisibility(VISIBLE);
                     }
                     else {
                         mCardBackLayout.setVisibility(VISIBLE);
-                        mCardFrontLayout.setVisibility(INVISIBLE);
+                        mCardFrontLayout.setVisibility(GONE);
                     }
                 }
 
@@ -274,14 +274,14 @@ public class EasyFlipView extends FrameLayout {
                 public void onAnimationEnd(Animator animator) {
 
                     if (mFlipState == FlipState.FRONT_SIDE) {
-                        mCardBackLayout.setVisibility(INVISIBLE);
+                        mCardBackLayout.setVisibility(GONE);
                         mCardFrontLayout.setVisibility(VISIBLE);
 
                         if (onFlipListener != null)
                             onFlipListener.onViewFlipCompleted(EasyFlipView.this, FlipState.FRONT_SIDE);
                     } else {
                         mCardBackLayout.setVisibility(VISIBLE);
-                        mCardFrontLayout.setVisibility(INVISIBLE);
+                        mCardFrontLayout.setVisibility(GONE);
 
                         if (onFlipListener != null)
                             onFlipListener.onViewFlipCompleted(EasyFlipView.this, FlipState.BACK_SIDE);

@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="550dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,29 +16,21 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView android:id="@+id/txtCategory_cardfront"
+            <TextView
+                android:id="@+id/txtWord_cardfront"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:text="Random Word"
-                android:textAllCaps="true"
-                android:textSize="12sp"
-                android:background="@color/gray_trans"
-                android:padding="12dp"/>
-
-            <TextView android:id="@+id/txtWord_cardfront"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="culminate"
-                android:textStyle="bold"
-                android:textSize="40sp"
-                android:textColor="@android:color/black"
+                android:layout_height="400dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+
+                android:text="culminate"
+                android:textColor="@android:color/black"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"

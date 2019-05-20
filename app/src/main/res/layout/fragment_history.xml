@@ -8,16 +8,18 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         tools:listitem="@layout/item_history" />
 
     <Button
         android:id="@+id/empty"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
+        android:background="@color/colorWhite"
         android:text="清除查询历史" />
 
 </LinearLayout>

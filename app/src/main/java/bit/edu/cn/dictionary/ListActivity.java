@@ -30,10 +30,10 @@ import static bit.edu.cn.dictionary.adapter.ListAdapter.words;
 public class ListActivity extends AppCompatActivity {
 
     public static final String TAG="Save_Activity";
-    public  ListAdapter ListAdapter;
+    public static ListAdapter ListAdapter;
     public RecyclerView saved_recycler;
     public TextView toolbar_title;
-    public SaveWord saveWord;  //单词本中的单词
+    public static SaveWord ListWord;  //单词本中的单词
     public Toolbar toolbar;
     public static boolean edit_state=false;
     private static boolean mIsDeleteMode = false;
@@ -82,8 +82,9 @@ public class ListActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 RecentWord reword=words.get(position);
                 if(!mIsDeleteMode){
-                    //todo 正常情况没有写,单击打开一个card界面
+                    startActivity(new Intent(ListActivity.this, CardActivity.class));
                     Log.v("click", String.valueOf(mIsDeleteMode));
+
                 }else{
                     Log.v("item click","");
                     checkbox(view,position);
@@ -156,8 +157,8 @@ public class ListActivity extends AppCompatActivity {
         });
 
         saved_recycler.setAdapter(ListAdapter);
-        saveWord=new SaveWord(this);
-        ListAdapter.refresh(saveWord.LoadFromSavedDB());
+        ListWord=new SaveWord(this);
+        ListAdapter.refresh(ListWord.LoadFromSavedDB());
 
     }
 
@@ -240,10 +241,10 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 for (int i = 0; i < words.size(); i++) {
                     if (words.get(i).isChecked()) {
-                        saveWord.deleteWord(words.get(i).getWord());
+                        ListWord.deleteWord(words.get(i).getWord());
                     }
                 }
-                ListAdapter.refresh(saveWord.LoadFromSavedDB());
+                ListAdapter.refresh(ListWord.LoadFromSavedDB());
                 changeDeleteMode(false);
                 toolbar.setNavigationIcon(R.drawable.ic_back_black);
                 dialog.dismiss();

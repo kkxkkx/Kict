@@ -47,6 +47,7 @@ public class SaveWord {
         ContentValues contentValue=new ContentValues();
         contentValue.put(SaveInfo.COLUMN_INTERPRET,w.getInterpret());
         contentValue.put(SaveInfo.COLUMN_WORD,w.getKey());
+        contentValue.put(SaveInfo.COLUMN_PRON,w.getPsA());
         long rowId=db.insert(SaveInfo.TABLE_NAME,null,contentValue);
     }
 
@@ -65,6 +66,7 @@ public class SaveWord {
             cursor=db.query(SaveInfo.TABLE_NAME,
                     new String[]{
                             SaveInfo.COLUMN_WORD,
+                            SaveInfo.COLUMN_PRON,
                             SaveInfo.COLUMN_INTERPRET,
                             SaveInfo._ID},
                     null,null,null,
@@ -73,11 +75,13 @@ public class SaveWord {
             {
                 long int_now=cursor.getLong(cursor.getColumnIndex(SaveInfo._ID));
                 String word_now=cursor.getString(cursor.getColumnIndex(SaveInfo.COLUMN_WORD));
+                String pron_now=cursor.getString(cursor.getColumnIndex(SaveInfo.COLUMN_PRON));
                 String interpret_now=cursor.getString(cursor.getColumnIndex(SaveInfo.COLUMN_INTERPRET));
 
                 RecentWord recentWord=new RecentWord(int_now);
                 recentWord.setWord(word_now);
                 recentWord.setInterpret(interpret_now);
+                recentWord.setpron(pron_now);
                 result.add(recentWord);
             }
 
