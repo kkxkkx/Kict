@@ -12,9 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import bit.edu.cn.dictionary.R;
-import bit.edu.cn.dictionary.ThemeOperator;
-import bit.edu.cn.dictionary.bean.RecentWord;
-import bit.edu.cn.dictionary.search.HistoryOperator;
+import bit.edu.cn.dictionary.notification.ThemeOperator;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder> {
 

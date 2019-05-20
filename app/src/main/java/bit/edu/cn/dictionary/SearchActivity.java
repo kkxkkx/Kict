@@ -6,15 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -34,6 +31,7 @@ import bit.edu.cn.dictionary.search.EmptyFragment;
 import bit.edu.cn.dictionary.search.ErrorFragment;
 import bit.edu.cn.dictionary.search.HistoryFragment;
 import bit.edu.cn.dictionary.search.WordFragment;
+import bit.edu.cn.dictionary.utils.AudioPlayer;
 import bit.edu.cn.dictionary.utils.AudioUtils;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
@@ -61,17 +59,11 @@ public class SearchActivity extends AppCompatActivity {
     private TextView btn_back=null;
     public static SaveWord saveWord;
     public HistoryWord historyWord;
-
-
-    private LinearLayout llContentView;
-    private LayoutInflater mInflater;
     public  boolean flag=true;
-
+    public static AudioPlayer audioPlay;
 
     public static TextView et_searchview;
 
-
-    public RecyclerView sentence_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        audioPlay=new AudioPlayer(this);
 
         saveWord=new SaveWord(this);
         wordFragment = new WordFragment();
@@ -220,7 +212,7 @@ public class SearchActivity extends AppCompatActivity {
         if (Word_temp == null || Word_temp.equals(""))
             return ;
         char[] array = Word_temp.toCharArray();
-        if (array[0] > 256)
+        if (array[0] > 256)  //TODO 中文输入做一个错误页面
             return ;
 
         final String URL_temp = NetworkUtils.Search_Word1 + Word_temp + NetworkUtils.Search_Word2;
@@ -232,8 +224,8 @@ public class SearchActivity extends AppCompatActivity {
 
                 try {
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
-                    //AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
-                    //AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_us");
+                    AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
+                    AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_uk");
 
                     if (Word_Now == null)
                         switchFragment(ERROR);
@@ -262,20 +254,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         thread.start();
-    }
-
-    public void refresh()
-    {
-//        mInflater=LayoutInflater.from(this);
-//        if(Word_Now!=null)
-//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_word,null));
-//        if(Word_Now.getPsA()!=null)
-//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_pron,null));
-//        if(Word_Now.getInterpret()!=null)
-//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_interpret,null));
-//        wordFragment.tv_word.setText(Word_Now.getKey());
-        //        if(Word_Now.getSentenceNum()!=0)
-//            llContentView.addView(View.inflate(SearchActivity.this,R.layout.add_sentence,null));
     }
 
 

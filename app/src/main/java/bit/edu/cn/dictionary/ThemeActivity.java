@@ -1,20 +1,17 @@
 package bit.edu.cn.dictionary;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -23,6 +20,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import bit.edu.cn.dictionary.adapter.ThemeAdapter;
+import bit.edu.cn.dictionary.notification.ThemeOperator;
 import bit.edu.cn.dictionary.utils.ThemeParser;
 
 public class ThemeActivity extends AppCompatActivity {

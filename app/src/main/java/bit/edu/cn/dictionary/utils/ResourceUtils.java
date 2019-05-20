@@ -19,7 +19,7 @@ import static bit.edu.cn.dictionary.SearchActivity.StoragePath;
  * @function  将输入流写入文件
  */
 public class ResourceUtils {
-    private String FilePath=null;
+    public static String FilePath;
     public static final String TAG="PATH";
 
     public ResourceUtils()

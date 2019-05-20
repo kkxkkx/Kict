@@ -16,11 +16,9 @@ import java.util.List;
 
 import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.bean.RecentWord;
-import bit.edu.cn.dictionary.db.SaveWord;
 
 import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
 import static bit.edu.cn.dictionary.ListActivity.ListWord;
-import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHolder> {
 
@@ -94,12 +92,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
             }
         });
 
-        holder.yes_back.setOnClickListener(new View.OnClickListener() {
+        holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListWord.deleteWord(words.get(position).getWord());
-                refresh(ListWord.LoadFromSavedDB());
-                ListAdapter.refresh(ListWord.LoadFromSavedDB());
+                //显示单词信息
 
             }
         });
@@ -113,7 +109,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
     public static class SampleViewHolder extends  RecyclerView.ViewHolder{
 
         public Button no_back;
-        public Button yes_back;
+        public Button details;
         public TextView word_back;
         public TextView pron_back;
         public TextView inter_back;
@@ -123,7 +119,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         public SampleViewHolder(@NonNull View itemView) {
             super(itemView);
             no_back=itemView.findViewById(R.id.btnNo_cardback);
-            yes_back=itemView.findViewById(R.id.btnYes_cardback);
+            details=itemView.findViewById(R.id.btnYes_cardback);
             word_back=itemView.findViewById(R.id.txtWord_cardback);
             word_front=itemView.findViewById(R.id.txtWord_cardfront);
             pron_back=itemView.findViewById(R.id.txtpron_cardback);

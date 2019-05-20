@@ -118,7 +118,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_horizontal"
-                    android:text="I Knew this Word!"
+                    android:text="details"
                     android:textColor="@color/colorPrimary" />
 
             </RelativeLayout>
