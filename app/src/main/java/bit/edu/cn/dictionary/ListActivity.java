@@ -185,9 +185,11 @@ public class ListActivity extends AppCompatActivity {
 
             case R.id.action_debug:
                 startActivity(new Intent(this, DebugActivity.class));
+                break;
 
             case R.id.action_card:
-                return true;
+                startActivity(new Intent(this, CardActivity.class));
+                break;
             case R.id.delete_note:
 
                 int checkNum=0;   //checkbox勾选的个数

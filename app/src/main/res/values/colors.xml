@@ -9,4 +9,8 @@
     <color name="colorLightBlue">#5CACEE</color>
     <color name="colorBlack">#1e1e1e</color>
     <color name="colorGray">#3C3C3C</color>
+    <color name="colorRed">#b52913</color>
+    <color name="gray_trans">#88e5e6e7</color>
+    <color name="colorGrayText">#9e9d9d</color>
+    <color name="colorGrayTextDark">#636363</color>
 </resources>

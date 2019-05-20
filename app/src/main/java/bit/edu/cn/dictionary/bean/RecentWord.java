@@ -7,6 +7,7 @@ public class RecentWord {
     private String word=null;
     private Date date;
     public long id;
+    public boolean isFlipped=false;
     private boolean isChecked=false;
 
     public void setChecked(boolean checked) {

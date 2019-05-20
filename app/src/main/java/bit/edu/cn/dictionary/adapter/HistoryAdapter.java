@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.wajahatkarim3.easyflipview.EasyFlipView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +71,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             wordText=itemView.findViewById(R.id.tv_history_word);
             interpretText=itemView.findViewById(R.id.text_interpret);
             deleteBtn=itemView.findViewById(R.id.delete);
+
         }
 
 

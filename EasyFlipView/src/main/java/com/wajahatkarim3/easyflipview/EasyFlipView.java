@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -334,6 +335,7 @@ public class EasyFlipView extends FrameLayout {
             return;
 
         if (flipType.equalsIgnoreCase("horizontal")) {
+            Log.v(TAG,"horizontal");
             if (mSetRightOut.isRunning() || mSetLeftIn.isRunning()) return;
 
             mCardBackLayout.setVisibility(VISIBLE);
