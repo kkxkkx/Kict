@@ -9,6 +9,7 @@ public class RecentWord {
     public long id;
     public boolean isFlipped=false;
     private boolean isChecked=false;
+    private boolean isNoti=false;  //判断有没有在通知栏显示过
     private String pron;
 
     public void setChecked(boolean checked) {
@@ -29,5 +30,8 @@ public class RecentWord {
 
     public  void setpron(String pron){this.pron=pron;}
     public  String getpron(){return pron;}
+
+    public void setNoti(Boolean bool){isNoti=bool;}
+    public Boolean getNoti(){return  isNoti;}
 
 }

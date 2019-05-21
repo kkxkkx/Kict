@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Dictionary</string>
-
+    <string name="app_name">Kict</string>
     <!-- List -->
     <string name="action_edit">edit</string>
     <string name="action_debug">Debug</string>

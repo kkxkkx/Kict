@@ -7,9 +7,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,8 +29,9 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.db.Sign;
-import bit.edu.cn.dictionary.db.SignSQLHelper;
+import bit.edu.cn.dictionary.notification.SendToNoti;
 
 import static bit.edu.cn.dictionary.db.GetInfo.getInterpret;
 import static bit.edu.cn.dictionary.db.GetInfo.getWord;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_sign;
     public TextView tv_click;
     public Sign signhelper;
+    public static SaveWord NotiWord;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+        NotiWord=new SaveWord(this);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 tv_date.setText("");
                 tv_sign.setText("签到成功！");
-                //sendwordMsg();
+                sendwordMsg();
                 tv_date.setText("已连续签到"+signdays+"天");
                 iv_sign.setImageResource(R.drawable.icon_sign_already);
             }
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             String channelID="word";
             String channelName="单词推送";
-            int importance=NotificationManager.IMPORTANCE_HIGH;
+            int importance=NotificationManager.IMPORTANCE_MIN;
             createNotificationChannel(channelID,channelName,importance);
 
         }
@@ -157,19 +158,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void sendwordMsg() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        String word=getWord();
-        String interpret=getInterpret();
+        SendToNoti send=new SendToNoti();
+        String word=send.getNoti_word();
+        String interpret=send.getNoti_interpret();
         Log.v(TAG,"notification_display");
-        Notification notification = new NotificationCompat.Builder(this, "chat")
-                .setContentTitle("hello")
-                .setContentText("n.你好")
+        Notification notification = new NotificationCompat.Builder(this, "word")
+                .setContentTitle(word)
+                //.setContentText(interpret)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(interpret))
                 .setSmallIcon(R.drawable.tosave)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.tosave))
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setShowWhen(false)
-                .setOngoing(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setOngoing(true)  //不能删除
                 .build();
         manager.notify(1, notification);
+        Log.v(TAG,"notification_isplay");
     }
 
     private void setStatusBarLightMode() {

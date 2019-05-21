@@ -22,6 +22,7 @@ import static bit.edu.cn.dictionary.SearchActivity.saveWord;
 import static bit.edu.cn.dictionary.SearchActivity.searchword;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.bean.State.SAVED;
+import static bit.edu.cn.dictionary.db.SaveState.FORSAVE;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.UK_ACCENT;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.US_ACCENT;
 
@@ -117,7 +118,7 @@ public class WordFragment extends Fragment {
     {
 
         Log.v("iv_state", String.valueOf(iv_state));
-        if(saveWord.IsSaved(searchword))
+        if(saveWord.IsSaved(searchword,FORSAVE))
         {
             Log.v(TAG,"refreshUI");
             iv_state.setImageResource(R.drawable.saved);

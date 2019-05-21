@@ -20,6 +20,6 @@ public class SaveContract {
         public static String  COLUMN_WORD="word";
         public static String  COLUMN_PRON="pronunciation";
         public static String  COLUMN_INTERPRET="interpret";
-        public static boolean COLUMN_USED=false;
+        public static String COLUMN_USED="false";
     }
 }

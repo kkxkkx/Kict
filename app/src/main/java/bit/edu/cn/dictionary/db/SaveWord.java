@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.security.acl.LastOwnerException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class SaveWord {
         contentValue.put(SaveInfo.COLUMN_INTERPRET,w.getInterpret());
         contentValue.put(SaveInfo.COLUMN_WORD,w.getKey());
         contentValue.put(SaveInfo.COLUMN_PRON,w.getPsA());
+        contentValue.put(SaveInfo.COLUMN_USED,false);
         long rowId=db.insert(SaveInfo.TABLE_NAME,null,contentValue);
     }
 
@@ -93,7 +95,7 @@ public class SaveWord {
         return result;
     }
 
-    public boolean IsSaved(String word)
+    public boolean IsSaved(String word,SaveState state)
     {
         String selection=SaveInfo.COLUMN_WORD+" = ?";
         String[] selectionArgs={word};
@@ -105,10 +107,20 @@ public class SaveWord {
                 selectionArgs,
                 null,
                 null, null);
-        if(cursor.getCount()==0)
-            return false;
-        Log.v(TAG,"word saves");
-        return true;
+        if(state==SaveState.FORSAVE)
+        {
+            if(cursor.getCount()==0)
+                return false;
+            Log.v(TAG,"word saves");
+            return true;
+        }
+        else
+        {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(SaveInfo.COLUMN_USED, 1);
+            db.update(SaveInfo.TABLE_NAME, contentValues, selection, selectionArgs);
+            return true;
+        }
     }
 
     public void deleteWord(String word)
@@ -117,4 +129,63 @@ public class SaveWord {
         String[] selectiopnArgs={word};
         db.delete(SaveInfo.TABLE_NAME,selection,selectiopnArgs);
     }
+
+    public RecentWord LoadNotiWordFromDB()
+    {
+        if(db==null)
+        {
+            return null;
+        }
+        Log.v(TAG,"save db is not empty");
+        Cursor cursor=null;
+        try{
+            cursor=db.query(SaveInfo.TABLE_NAME,
+                    new String[]{
+                            SaveInfo.COLUMN_WORD,
+                            SaveInfo.COLUMN_INTERPRET,
+                            SaveInfo.COLUMN_USED,
+                            SaveInfo._ID},
+                    null,null,null,
+                    null, null);
+            if(cursor.getCount()<=0)
+                return null;
+            Log.v(TAG,"getcount");
+            while(cursor.moveToNext())
+            {
+                Log.v(TAG,"moveToNext");
+                long int_now=cursor.getLong(cursor.getColumnIndex(SaveInfo._ID));
+                String word_now=cursor.getString(cursor.getColumnIndex(SaveInfo.COLUMN_WORD));
+                String interpret_now=cursor.getString(cursor.getColumnIndex(SaveInfo.COLUMN_INTERPRET));
+                Long used_now=cursor.getLong(cursor.getColumnIndex(SaveInfo.COLUMN_USED));
+                if(used_now==null)
+                {
+                    IsSaved(word_now,SaveState.FORNOTIFICATION);
+                    RecentWord recentWord=new RecentWord(int_now);
+                    recentWord.setWord(word_now);
+                    recentWord.setInterpret(interpret_now);
+                    Log.v(TAG,"1111"+recentWord.getWord());
+                    Log.v(TAG,"1111"+recentWord.getInterpret());
+                    return recentWord;
+                }
+                else if(used_now==0)
+                {
+                    IsSaved(word_now,SaveState.FORNOTIFICATION);
+                    RecentWord recentWord=new RecentWord(int_now);
+                    recentWord.setWord(word_now);
+                    recentWord.setInterpret(interpret_now);
+                    Log.v(TAG,"1111"+recentWord.getWord());
+                    Log.v(TAG,"1111"+recentWord.getInterpret());
+                    return recentWord;
+                }
+            }
+
+        }finally {
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+        Log.v(TAG,"2222");
+        return null;
+    }
+
 }
