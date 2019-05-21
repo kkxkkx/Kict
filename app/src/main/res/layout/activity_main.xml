@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@drawable/background_main"
     tools:context=".MainActivity"
     >
 
@@ -54,8 +54,9 @@
 
 
     <TextView
-        android:layout_width="260dp"
-        android:layout_height="251dp"
+        android:id="@+id/textView3"
+        android:layout_width="180dp"
+        android:layout_height="175dp"
         android:layout_marginStart="75dp"
         android:layout_marginLeft="75dp"
         android:layout_marginTop="210dp"
@@ -68,13 +69,16 @@
         android:paddingBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 
 
     <TextView
-        android:layout_width="260dp"
-        android:layout_height="251dp"
+        android:id="@+id/tv_sign"
+        android:layout_width="191dp"
+        android:layout_height="64dp"
         android:layout_marginStart="75dp"
         android:layout_marginLeft="75dp"
         android:layout_marginTop="210dp"
@@ -82,15 +86,37 @@
         android:layout_marginRight="75dp"
         android:layout_marginBottom="270dp"
         android:gravity="center"
-        android:text="签到"
-        android:textSize="30dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:text="签到"
+        android:textColor="@color/colorDark"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="sendwordMsg"/>
+        app:layout_constraintVertical_bias="0.508" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/tv_sign"
+        app:layout_constraintStart_toStartOf="@+id/tv_sign"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sign" />
+
+    <ImageView
+        android:id="@+id/iv_sign"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:srcCompat="@drawable/icon_sign_date" />
 
 
 </android.support.constraint.ConstraintLayout>

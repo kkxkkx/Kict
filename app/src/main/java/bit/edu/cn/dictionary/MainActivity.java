@@ -22,10 +22,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import bit.edu.cn.dictionary.db.Sign;
+import bit.edu.cn.dictionary.db.SignSQLHelper;
 
 import static bit.edu.cn.dictionary.db.GetInfo.getInterpret;
 import static bit.edu.cn.dictionary.db.GetInfo.getWord;
@@ -34,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_ADD=2;
     private static final String TAG="main";
+    public TextView tv_date;
+    public ImageView iv_sign;
+    public TextView tv_sign;
+    public TextView tv_click;
+    public Sign signhelper;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -41,6 +53,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
+
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        tv_date=findViewById(R.id.tv_date);
+        tv_date.setText(simpleDateFormat.format(date));
+        signhelper=new Sign(this);
+        final int signdays=signhelper.LoadSignDays(String.valueOf(date));
+
+        tv_click=findViewById(R.id.textView3);
+        iv_sign=findViewById(R.id.iv_sign);
+        tv_sign=findViewById(R.id.tv_sign);
+        tv_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_date.setText("");
+                tv_sign.setText("签到成功！");
+                //sendwordMsg();
+                tv_date.setText("已连续签到"+signdays+"天");
+                iv_sign.setImageResource(R.drawable.icon_sign_already);
+            }
+        });
+
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -118,10 +155,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         notificationManager.createNotificationChannel(channel);
     }
 
-    public void sendwordMsg(View view) {
+    public void sendwordMsg() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         String word=getWord();
         String interpret=getInterpret();
+        Log.v(TAG,"notification_display");
         Notification notification = new NotificationCompat.Builder(this, "chat")
                 .setContentTitle("hello")
                 .setContentText("n.你好")

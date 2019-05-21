@@ -35,7 +35,6 @@ public class ListActivity extends AppCompatActivity {
     public TextView toolbar_title;
     public static SaveWord ListWord;  //单词本中的单词
     public Toolbar toolbar;
-    public static boolean edit_state=false;
     private static boolean mIsDeleteMode = false;
 
     private MenuItem mDeleteWord;
