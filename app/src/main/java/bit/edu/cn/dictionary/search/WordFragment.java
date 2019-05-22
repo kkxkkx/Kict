@@ -57,6 +57,7 @@ public class WordFragment extends Fragment {
         iv_uk=view.findViewById(R.id.pron_uk);
 
         sentence_list = view.findViewById(R.id.sentence_list);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 

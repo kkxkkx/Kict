@@ -1,5 +1,6 @@
 package bit.edu.cn.dictionary;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import bit.edu.cn.dictionary.adapter.CardAdapter;
+import bit.edu.cn.dictionary.adapter.DetailClickListener;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.menu.SpaceItemDecoration;
 
@@ -25,6 +27,8 @@ public class CardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        int position=intent.getIntExtra("position",0);
         this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -41,10 +45,24 @@ public class CardActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
+        llm.scrollToPositionWithOffset(position, 0);
+        llm.setStackFromEnd(false);
+
         CardAdapter=new CardAdapter();
         recyclerView.setAdapter(CardAdapter);
         cardword=new SaveWord(this);
         CardAdapter.refresh(cardword.LoadFromSavedDB());
+
+        CardAdapter.setDetailListener(new DetailClickListener() {
+            @Override
+            public void onClick(String word) {
+                Intent intent_pass=new Intent(CardActivity.this,InfoActivity.class);
+                intent_pass.putExtra("word",word);
+                startActivity(intent_pass);
+            }
+        });
     }
 
     private void setStatusBarLightMode() {

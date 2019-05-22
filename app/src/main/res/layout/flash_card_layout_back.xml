@@ -19,69 +19,29 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/txtWord_cardback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="99dp"
-                    android:layout_marginTop="76dp"
-                    android:layout_marginEnd="134dp"
-                    android:layout_marginRight="134dp"
-                    android:gravity="center_vertical"
-                    android:text="culminate"
-                    android:textColor="@android:color/black"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/txtType_cardback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/txtWord_cardback"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/txtWord_cardback"
                     android:textColor="@color/colorGrayText"
                     android:textSize="20sp"
                     android:textStyle="italic" />
 
 
                 <TextView
-                    android:id="@+id/txtpron_cardback"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtWord_cardback"
-                    android:layout_alignStart="@+id/txtWord_cardback"
-                    android:layout_alignLeft="@+id/txtWord_cardback"
-                    android:layout_alignEnd="@+id/txtWord_cardback"
-                    android:layout_alignRight="@+id/txtWord_cardback"
-                    android:layout_marginStart="-68dp"
-                    android:layout_marginLeft="-68dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="-70dp"
-                    android:layout_marginRight="-70dp"
-                    android:gravity="center"
-                    android:text="reproduce, duplicate"
-                    android:textSize="15sp" />
-
-
-                <TextView
                     android:id="@+id/txtExample_cardback"
-                    android:layout_width="360dp"
+                    android:layout_width="283dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtpron_cardback"
-                    android:layout_alignStart="@+id/txtWord_cardback"
-                    android:layout_alignLeft="@+id/txtWord_cardback"
-                    android:layout_alignEnd="@+id/txtWord_cardback"
-                    android:layout_alignRight="@+id/txtWord_cardback"
-                    android:layout_marginStart="-78dp"
-                    android:layout_marginLeft="-78dp"
-                    android:layout_marginTop="89dp"
-                    android:layout_marginEnd="-104dp"
-                    android:layout_marginRight="-104dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="189dp"
+                    android:layout_marginEnd="73dp"
+                    android:layout_marginRight="73dp"
                     android:text="reproduce, duplicate"
                     android:textColor="@color/colorGrayTextDark"
                     android:textSize="15sp" />

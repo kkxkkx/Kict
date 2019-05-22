@@ -16,8 +16,6 @@ public class AudioPlayer {
     public boolean IsPermitted=true;
 
     public Context mcontext=null;
-    public String mTableName=null;
-    public AWord audioword=null;
 
     public AudioPlayer(Context context)
     {

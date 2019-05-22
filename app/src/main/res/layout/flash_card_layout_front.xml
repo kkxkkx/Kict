@@ -16,21 +16,34 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
-                android:id="@+id/txtWord_cardfront"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="50dp"
-                android:gravity="center"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="480dp">
 
-                android:text="culminate"
-                android:textColor="@android:color/black"
-                android:textSize="40sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtWord_cardfront"
+                    android:layout_width="match_parent"
+                    android:layout_height="205dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="195dp"
+                    android:gravity="center"
+                    android:text="culminate"
+                    android:textColor="@android:color/black"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pron_front"
+                    android:layout_width="match_parent"
+                    android:layout_height="73dp"
+                    android:layout_alignBottom="@+id/txtWord_cardfront"
+                    android:layout_marginBottom="-3dp"
+                    android:gravity="center_horizontal"
+                    android:text="TextView" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -39,14 +52,17 @@
                 android:layout_marginBottom="10dp"/>
 
 
-            <Button android:id="@+id/btnViewMeaning_cardfront"
+            <Button
+                android:id="@+id/btnViewMeaning_cardfront"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap to see the meaning!"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorGrayText"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                />
+                android:layout_marginBottom="2dp"
+                android:text="Tap to see the meaning!"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorGrayText" />
 
         </LinearLayout>
 

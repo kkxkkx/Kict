@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/card_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+    <TextView
+        android:id="@+id/word_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="details"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+</android.support.v7.widget.Toolbar>
+
+<RelativeLayout
+    android:layout_height="750dp"
+    android:layout_width="match_parent"
+    >
+    <TextView
+        android:id="@+id/card_history_word"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorGray"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/card_iv_pron_us"
+        android:layout_width="28dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/card_history_word"
+        android:layout_alignStart="@+id/card_history_word"
+        android:layout_alignLeft="@+id/card_history_word"
+        android:layout_marginStart="-3dp"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="18dp"
+        app:srcCompat="@drawable/us" />
+
+    <TextView
+        android:id="@+id/card_pron_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/card_interpret"
+        android:layout_alignLeft="@+id/card_interpret"
+        android:layout_alignBottom="@+id/card_iv_pron_us"
+        android:layout_marginStart="31dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/colorGray" />
+
+    <ImageView
+        android:id="@+id/card_iv_pron_uk"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:layout_alignBottom="@+id/card_iv_pron_us"
+        android:layout_marginStart="33dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginBottom="-6dp"
+        android:layout_toEndOf="@+id/card_pron_us"
+        android:layout_toRightOf="@+id/card_pron_us"
+        app:srcCompat="@drawable/uk" />
+
+    <TextView
+        android:id="@+id/card_pron_uk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/card_iv_pron_uk"
+        android:layout_alignLeft="@+id/card_iv_pron_uk"
+        android:layout_alignBottom="@+id/card_iv_pron_us"
+        android:layout_marginStart="49dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/colorGray" />
+
+    <LinearLayout
+        android:id="@+id/pron_interpret_divider"
+        android:layout_width="384dp"
+        android:layout_height="19dp"
+        android:layout_alignStart="@+id/card_history_word"
+        android:layout_alignLeft="@+id/card_history_word"
+        android:layout_alignBottom="@+id/card_pron_us"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="-35dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="19dp"
+            android:layout_height="9dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_arrow" />
+
+        <TextView
+            android:id="@+id/card1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/pron_interpret_divider"
+            android:gravity="center_vertical"
+            android:text="基本释义"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/card_interpret"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/card_history_word"
+        android:layout_alignLeft="@+id/card_history_word"
+        android:layout_alignTop="@+id/pron_interpret_divider"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/layerlist"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="12dp"
+        android:textColor="@color/colorGray"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/interpret_sentence_divider"
+        android:layout_width="384dp"
+        android:layout_height="19dp"
+        android:layout_below="@+id/card_interpret"
+        android:layout_alignStart="@+id/card_history_word"
+        android:layout_alignLeft="@+id/card_history_word"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="19dp"
+            android:layout_height="9dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_arrow" />
+
+        <TextView
+            android:id="@+id/card2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/pron_interpret_divider"
+            android:gravity="center_vertical"
+            android:text="经典例句"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_sentence_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/interpret_sentence_divider"
+        android:layout_alignStart="@+id/card_interpret"
+        android:layout_alignLeft="@+id/card_interpret"
+        android:layout_alignEnd="@+id/card_interpret"
+        android:layout_alignRight="@+id/card_interpret"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/layerlist"
+        android:divider="#8C8C8C"
+        android:dividerHeight="0px"
+        android:padding="12dp"
+        tools:listitem="@layout/item_sentence">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
+
+</LinearLayout>

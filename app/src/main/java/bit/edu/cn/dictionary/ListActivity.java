@@ -74,6 +74,7 @@ public class ListActivity extends AppCompatActivity {
         saved_recycler.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         saved_recycler.setItemAnimator(new DefaultItemAnimator());
 
+
         ListAdapter=new ListAdapter();
 
         ListAdapter.setmListener(new ItemClickListener(){
@@ -81,9 +82,11 @@ public class ListActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 RecentWord reword=words.get(position);
                 if(!mIsDeleteMode){
-                    startActivity(new Intent(ListActivity.this, CardActivity.class));
-                    Log.v("click", String.valueOf(mIsDeleteMode));
+                    Intent intent=new Intent(ListActivity.this, CardActivity.class);
+                    intent.putExtra("position",position);
+                    startActivity(intent);
 
+                    Log.v("click", String.valueOf(mIsDeleteMode));
                 }else{
                     Log.v("item click","");
                     checkbox(view,position);

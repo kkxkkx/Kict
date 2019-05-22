@@ -1,5 +1,6 @@
 package bit.edu.cn.dictionary.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +15,10 @@ import com.wajahatkarim3.easyflipview.EasyFlipView;
 import java.util.ArrayList;
 import java.util.List;
 
+import bit.edu.cn.dictionary.CardActivity;
+import bit.edu.cn.dictionary.InfoActivity;
 import bit.edu.cn.dictionary.R;
+import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
 import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
@@ -25,7 +29,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
 
     public static final List<RecentWord> words=new ArrayList<>();
     public static final String TAG="Sample";
+    private DetailClickListener mlistener;
 
+    public void setDetailListener(DetailClickListener mListener){
+        this.mlistener=mListener;
+    }
 
     public  void refresh(List<RecentWord> newWords){
         Log.v(TAG,"refresh");
@@ -95,10 +103,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //显示单词信息
-
+                int position=holder.getAdapterPosition();
+                mlistener.onClick(words.get(position).getWord());
             }
         });
+
     }
 
     @Override
@@ -110,8 +119,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
 
         public Button no_back;
         public Button details;
-        public TextView word_back;
-        public TextView pron_back;
+        public TextView pron_front;
         public TextView inter_back;
         public TextView word_front;
         public Button switch_front;
@@ -120,9 +128,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
             super(itemView);
             no_back=itemView.findViewById(R.id.btnNo_cardback);
             details=itemView.findViewById(R.id.btnYes_cardback);
-            word_back=itemView.findViewById(R.id.txtWord_cardback);
             word_front=itemView.findViewById(R.id.txtWord_cardfront);
-            pron_back=itemView.findViewById(R.id.txtpron_cardback);
+            pron_front=itemView.findViewById(R.id.pron_front);
             inter_back=itemView.findViewById(R.id.txtExample_cardback);
             switch_front=itemView.findViewById(R.id.btnViewMeaning_cardfront);
             flipView=itemView.findViewById(R.id.flipView);
@@ -130,9 +137,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         public void bind(final RecentWord cardword)
         {
             word_front.setText(cardword.getWord());
-            word_back.setText(cardword.getWord());
             inter_back.setText(cardword.getInterpret());
-            pron_back.setText(cardword.getpron());
+            pron_front.setText(cardword.getpron());
         }
 
     }

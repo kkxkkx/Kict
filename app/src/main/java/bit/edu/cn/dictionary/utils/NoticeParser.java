@@ -30,13 +30,16 @@ public class NoticeParser {
                     }else if("string".equals(parser.getName())){
                         word=parser.nextText();
                     }else if("interpre".equals(parser.getName())){
+                        if(interpret!=null)
                         interpret+=parser.nextText()+"\n";
+                        else
+                            interpret=parser.nextText()+"\n";
                     }
                     break;
                 case XmlPullParser.END_TAG:
                     if ("message".equals(parser.getName())) {
-
                         MainActivity.noticeDB.SaveWord(word,interpret);
+                        interpret=null;
                     }
                     break;
             }
