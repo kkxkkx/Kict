@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages >
+    <message> <!--元素  即 对象 -->
+        <string>constraint</string>
+        <interpre>n. 约束, 强制, 约束条件, 对感情的压抑, 虚情假意 [计算机] 限制</interpre>
+    </message>
+    <message>
+        <string>divert</string>
+        <interpre>vt. 转移,使欢娱</interpre>
+        <interpre>vi. 转移</interpre>
+    </message>
+    <message>
+        <string>strive</string>
+        <interpre>v. 努力,奋斗,力争</interpre>
+    </message>
+    <message>
+        <string>bureaucracy</string>
+        <interpre>n. 官僚制度, 官僚主义</interpre>
+    </message>
+    <message>
+        <string>saturation</string>
+        <interpre>n. 饱和(浸透, 磁性饱和, 色度学章度)</interpre>
+    </message>
+    <message>
+        <string>discern</string>
+        <interpre>vt.看出； 理解，了解； 识别，辨别 vi.辨明，分清</interpre>
+    </message>
+    <message>
+        <string>wrath</string>
+        <interpre>n. 愤怒, 激怒, 猛烈的力量</interpre>
+    </message>
+    <message>
+        <string>alliance</string>
+        <interpre>n. 结盟,联盟,联姻 Alliance [地理名词]</interpre>
+    </message>
+    <message>
+        <string>specify</string>
+        <interpre>vt. 明确说明,叙述,指定,详细说明</interpre>
+    </message>
+    <message>
+        <string>elude</string>
+        <interpre>v. 逃避, 躲避</interpre>
+    </message>
+    <message>
+        <string>assistance</string>
+        <interpre>n. 帮助, 援助</interpre>
+    </message>
+    <message>
+        <string>misery</string>
+        <interpre>n. 痛苦,悲惨的境遇,苦难</interpre>
+    </message>
+    <message>
+        <string>misfortune</string>
+        <interpre>n. 不幸, 灾祸</interpre>
+    </message>
+    <message>
+        <string>tremendous</string>
+        <interpre>adj. 巨大的, 惊人的</interpre>
+    </message>
+    <message>
+        <string>regain</string>
+        <interpre>v. 恢复, 重回, 复得</interpre>
+    </message>
+    <message>
+        <string>facilitate</string>
+        <interpre>vt. 帮助, 使...容易, 促进</interpre>
+    </message>
+    <message>
+        <string>finite</string>
+        <interpre>adj. 有限的</interpre>
+    </message>
+    <message>
+        <string>tangible</string>
+        <interpre>adj. 有形的, 可触摸的, 确凿的, 实际的</interpre>
+    </message>
+    <message>
+        <string>offspring</string>
+        <interpre>n. 子孙, 后代, 产物</interpre>
+    </message>
+    <message>
+        <string>amplify</string>
+        <interpre>v. 扩大, 详述, 使...增幅</interpre>
+    </message>
+    <message>
+        <string>competence</string>
+        <interpre>n. 能力,管辖权,技能</interpre>
+    </message>
+    <message>
+        <string>behalf</string>
+        <interpre>n. 代表；利益</interpre>
+    </message>
+    <message>
+        <string>cheery</string>
+        <interpre>adj. 活泼的, 愉快的</interpre>
+    </message>
+    <message>
+        <string>wit</string>
+        <interpre>n.机智；才智，智慧；富有机智的人； 打趣话，玩笑话</interpre>
+    </message>
+    <message>
+        <string>standstill</string>
+        <interpre>n. 停顿</interpre>
+    </message>
+    <message>
+        <string>celebrity</string>
+        <interpre>n. 名人, 著名,著名人士, 名声, 名誉, 社会名流</interpre>
+    </message>
+    <message>
+        <string>subsequent</string>
+        <interpre>adj. 随后的,后来的</interpre>
+    </message>
+    <message>
+        <string>substance</string>
+        <interpre>. 物质,实质,内容,重要性,财产</interpre>
+    </message>
+    <message>
+        <string>shorthand</string>
+        <interpre>n. 速记,缩写</interpre>
+    </message>
+    <message>
+        <string>frontier</string>
+        <interpre>n. 边界,边境，尖端，边缘</interpre>
+    </message>
+    <message>
+        <string>fruitful</string>
+        <interpre>adj. 多产的, 富有成效的</interpre>
+    </message>
+    <message>
+        <string>ego</string>
+        <interpre>n. 自我, 自负, 自尊心</interpre>
+    </message>
+    <message>
+        <string>intricate</string>
+        <interpre>adj. 复杂的,错综的,缠结的,难懂的</interpre>
+    </message>
+    <message>
+        <string>considerable</string>
+        <interpre>adj. 相当大的,可观的,重要的</interpre>
+    </message>
+    <message>
+        <string>milestone</string>
+        <interpre>n. 里程碑</interpre>
+    </message>
+    <message>
+        <string>indispensable</string>
+        <interpre>adj. 不可缺少的</interpre>
+    </message>
+    <message>
+        <string>patriarchal</string>
+        <interpre>adj. 家长的, 族长的, 由族长统治的</interpre>
+    </message>
+    <message>
+        <string>criterion</string>
+        <interpre>n. 标准, 准则</interpre>
+    </message>
+</messages>

@@ -24,17 +24,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import bit.edu.cn.dictionary.db.NoticeDB;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.db.Sign;
 import bit.edu.cn.dictionary.notification.SendToNoti;
-
-import static bit.edu.cn.dictionary.db.GetInfo.getInterpret;
-import static bit.edu.cn.dictionary.db.GetInfo.getWord;
+import bit.edu.cn.dictionary.utils.NoticeParser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 1;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_click;
     public Sign signhelper;
     public static SaveWord NotiWord;
+    public static NoticeDB noticeDB;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -57,6 +61,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         NotiWord=new SaveWord(this);
+        noticeDB=new NoticeDB(this);
+
+        InputStream inputStream = null;
+        try {
+            inputStream = getAssets().open("words.xml");
+            NoticeParser.pull(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());

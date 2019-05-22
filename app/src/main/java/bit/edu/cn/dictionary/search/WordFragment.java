@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import bit.edu.cn.dictionary.R;
@@ -39,8 +38,6 @@ public class WordFragment extends Fragment {
     public ImageView iv_uk;
     public RecyclerView sentence_list;
     public  SentenceAdapter sentence_adapter;
-    private LinearLayout llContentView;
-    private LayoutInflater mInflater;
 
     public final static String TAG="WordFragment";
 

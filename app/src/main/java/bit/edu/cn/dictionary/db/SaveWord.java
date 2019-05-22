@@ -136,7 +136,7 @@ public class SaveWord {
         {
             return null;
         }
-        Log.v(TAG,"save db is not empty");
+        Log.v(TAG,"Notice db is not empty");
         Cursor cursor=null;
         try{
             cursor=db.query(SaveInfo.TABLE_NAME,
