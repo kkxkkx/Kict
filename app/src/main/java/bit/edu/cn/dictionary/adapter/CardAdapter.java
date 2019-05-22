@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
                 mlistener.onClick(words.get(position).getWord());
             }
         });
-
+        //TODO 监听动画
     }
 
     @Override
@@ -124,8 +125,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         public TextView word_front;
         public Button switch_front;
         public EasyFlipView flipView;
+        public LottieAnimationView animationView;
         public SampleViewHolder(@NonNull View itemView) {
             super(itemView);
+            animationView=itemView.findViewById(R.id.animation_view);
             no_back=itemView.findViewById(R.id.btnNo_cardback);
             details=itemView.findViewById(R.id.btnYes_cardback);
             word_front=itemView.findViewById(R.id.txtWord_cardfront);

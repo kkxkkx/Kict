@@ -18,7 +18,7 @@ public class NoticeParser {
     public static String interpret=null;
     public static void pull(InputStream is) throws XmlPullParserException, IOException {
         String msg=null;
-
+        if(MainActivity.noticeDB.exist()) return;
         XmlPullParser parser= Xml.newPullParser();
         parser.setInput(is,"utf-8");
         int type=parser.getEventType();

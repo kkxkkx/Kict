@@ -47,6 +47,25 @@ public class NoticeDB {
         Log.v(TAG, String.valueOf(rowId));
     }
 
+    public boolean exist()
+    {
+        Cursor cursor=db.query(NoticeInfo.TABLE_NAME,
+                new String[]{
+                        NoticeInfo.COLUMN_WORD,
+                        NoticeInfo.COLUMN_INTERPRET,
+                        NoticeInfo.COLUMN_USED,
+                        NoticeInfo._ID},
+                null,null,null,
+                null, null);
+        if(cursor.getCount()>0)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+
     public void Saved(String word)
     {
         String selection= NoticeInfo.COLUMN_WORD+" = ?";
