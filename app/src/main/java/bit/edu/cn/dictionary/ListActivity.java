@@ -24,6 +24,7 @@ import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.notification.CheckboxChangeListener;
 import bit.edu.cn.dictionary.notification.ItemClickListener;
 import bit.edu.cn.dictionary.notification.ItemLongClickListener;
+import bit.edu.cn.dictionary.utils.AudioPlayer;
 
 import static bit.edu.cn.dictionary.adapter.ListAdapter.words;
 
@@ -40,6 +41,7 @@ public class ListActivity extends AppCompatActivity {
     private MenuItem mDeleteWord;
     private boolean isLong=false;  //激发方式
     private MenuItem mSelectAll;
+    public static AudioPlayer audio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         toolbar_title=findViewById(R.id.word_list_title);
 
+        audio=new AudioPlayer(this);
         toolbar=findViewById(R.id.word_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_black);
         setSupportActionBar(toolbar);

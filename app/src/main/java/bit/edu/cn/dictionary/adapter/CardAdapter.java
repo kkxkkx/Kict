@@ -1,5 +1,7 @@
 package bit.edu.cn.dictionary.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +27,9 @@ import bit.edu.cn.dictionary.bean.RecentWord;
 
 import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
 import static bit.edu.cn.dictionary.ListActivity.ListWord;
+import static bit.edu.cn.dictionary.ListActivity.audio;
+import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
+import static bit.edu.cn.dictionary.utils.AudioPlayer.US_ACCENT;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHolder> {
 
@@ -31,10 +37,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
     public static final List<RecentWord> words=new ArrayList<>();
     public static final String TAG="Sample";
     private DetailClickListener mlistener;
+    private Animation.AnimationListener animationListener;
 
     public void setDetailListener(DetailClickListener mListener){
         this.mlistener=mListener;
     }
+
+    public void setAnmationLisetner(Animation.AnimationListener anmationLisetner){this.animationListener=anmationLisetner;}
 
     public  void refresh(List<RecentWord> newWords){
         Log.v(TAG,"refresh");
@@ -106,6 +115,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 mlistener.onClick(words.get(position).getWord());
+            }
+        });
+
+        holder.animationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.animationView.playAnimation();
+                audio.playAndioByWord(words.get(position).getWord(),US_ACCENT);
             }
         });
         //TODO 监听动画

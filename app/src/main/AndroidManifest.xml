@@ -17,8 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:replace="android:appComponentFactory"
-        android:appComponentFactory="任意字符">
+        >
         <activity android:name=".MainActivity">
             <intent-filter>
 

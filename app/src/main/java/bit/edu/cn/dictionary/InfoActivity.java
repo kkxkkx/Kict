@@ -23,6 +23,7 @@ import bit.edu.cn.dictionary.utils.AudioPlayer;
 import bit.edu.cn.dictionary.utils.AudioUtils;
 import bit.edu.cn.dictionary.utils.NetworkUtils;
 
+import static bit.edu.cn.dictionary.ListActivity.audio;
 import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.UK_ACCENT;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.US_ACCENT;
@@ -37,7 +38,7 @@ public class InfoActivity extends AppCompatActivity {
     public Toolbar card_toolbar;
     public ImageView iv_us;
     public ImageView iv_uk;
-    public AudioPlayer audio;
+
     public RecyclerView sen_recyclerview;
     public SentenceAdapter sentence_adapter;
 
@@ -76,7 +77,7 @@ public class InfoActivity extends AppCompatActivity {
         word_info=intent.getStringExtra("word");
         getWordFromInternet();
 
-        audio=new AudioPlayer(this);
+
         iv_us.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
