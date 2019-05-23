@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,6 +25,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jaeger.library.StatusBarUtil;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -57,7 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
+        StatusBarUtil.setTransparent(this);
         setContentView(R.layout.activity_main);
+
+
+//        View decorView = getWindow().getDecorView();
+//        int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(option);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
 
 
 
@@ -113,14 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.WordBook).setOnClickListener(this);
         findViewById(R.id.home).setOnClickListener(this);
 
-
-        this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorWhite));
-        }
-        setStatusBarLightMode();
     }
 
     //申请权限
@@ -208,21 +211,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
  }
 
-    private void setStatusBarLightMode() {
-        if (this.getWindow() != null) {
-            Class clazz = this.getWindow().getClass();
-            try {
-                int darkModeFlag = 0;
-                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-                darkModeFlag = field.getInt(layoutParams);
-                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-                extraFlagField.invoke(this.getWindow(), darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }
 

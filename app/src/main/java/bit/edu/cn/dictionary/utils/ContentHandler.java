@@ -108,14 +108,12 @@ public class ContentHandler extends DefaultHandler {
         else if("trans".equals(nodename)){
             word.setTrans(value+"\n");
         }
-        //TODO 中文翻译成英文这一块暂缺
     }
 
     //在完成整个XML解析时调用
     @Override
     public void endDocument() throws SAXException{
         super.endDocument();
-        //TODO 目前还不能翻译中文
         if(isChinese) return;
         String interpret=word.getInterpret();
         //去掉解释的最后一个换行符

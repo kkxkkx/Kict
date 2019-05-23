@@ -125,7 +125,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
                 audio.playAndioByWord(words.get(position).getWord(),US_ACCENT);
             }
         });
-        //TODO 监听动画
     }
 
     @Override

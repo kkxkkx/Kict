@@ -88,7 +88,6 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //TODO 删除数据库
                 historyWord.empty();
                 HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
             }
