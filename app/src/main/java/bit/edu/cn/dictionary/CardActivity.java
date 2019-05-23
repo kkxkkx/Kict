@@ -9,10 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import bit.edu.cn.dictionary.adapter.Card;
 import bit.edu.cn.dictionary.adapter.CardAdapter;
 import bit.edu.cn.dictionary.adapter.DetailClickListener;
 import bit.edu.cn.dictionary.db.SaveWord;
@@ -24,6 +28,11 @@ import static bit.edu.cn.dictionary.ListActivity.ListWord;
 public class CardActivity extends AppCompatActivity {
     public CardAdapter CardAdapter;
     public SaveWord cardword;
+    public ImageView iv_card_back;
+    public Button btn_random;
+    public Button btn_again;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +50,16 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
+
         int space=20;
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        iv_card_back=findViewById(R.id.iv_card_back);
+        btn_random=findViewById(R.id.card_btn_random);
+        btn_again=findViewById(R.id.card_btn_again);
+
+
 
         LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
         llm.scrollToPositionWithOffset(position, 0);
@@ -61,6 +76,21 @@ public class CardActivity extends AppCompatActivity {
                 Intent intent_pass=new Intent(CardActivity.this,InfoActivity.class);
                 intent_pass.putExtra("word",word);
                 startActivity(intent_pass);
+            }
+        });
+
+        btn_random.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int i=(int) (Math.random() * CardAdapter.getItemCount());
+                //TODO 转到指定位置
+            }
+        });
+
+        btn_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

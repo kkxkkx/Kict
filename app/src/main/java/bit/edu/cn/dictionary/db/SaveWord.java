@@ -53,6 +53,7 @@ public class SaveWord {
         long rowId=db.insert(SaveInfo.TABLE_NAME,null,contentValue);
     }
 
+
     //查询数据放在RecentWord中
     public List<RecentWord> LoadFromSavedDB()
     {

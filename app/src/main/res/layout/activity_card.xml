@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,10 +9,55 @@
     android:orientation="vertical"
     >
 
+    <View
+        android:id="@+id/department"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="75dp"
+        android:background="#33000000" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_card"
-        />
-</LinearLayout>
+        android:layout_alignTop="@+id/department"
+        android:layout_marginTop="0dp"
+        tools:listitem="@layout/item_card" />
+
+    <Button
+        android:id="@+id/card_btn_again"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/department"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="11dp"
+        android:text="study again" />
+
+    <Button
+        android:id="@+id/card_btn_random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/card_btn_again"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
+        android:layout_marginBottom="-1dp"
+        android:layout_toStartOf="@+id/card_btn_again"
+        android:layout_toLeftOf="@+id/card_btn_again"
+        android:text="random" />
+
+    <ImageView
+        android:id="@+id/iv_card_back"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:layout_alignBottom="@+id/card_btn_random"
+        android:layout_marginEnd="69dp"
+        android:layout_marginRight="69dp"
+        android:layout_marginBottom="13dp"
+        android:layout_toStartOf="@+id/card_btn_random"
+        android:layout_toLeftOf="@+id/card_btn_random"
+        app:srcCompat="@drawable/ic_card_back" />
+</RelativeLayout>

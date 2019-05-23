@@ -56,6 +56,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         notifyDataSetChanged();
     }
 
+    public void swith(Card card)
+    {
+        if(card==Card.WORD)
+        {
+            for(int i=0;i<words.size();i++)
+            {
+                words.get(i).isFlipped=false;
+
+            }
+
+        }
+    }
     @NonNull
     @Override
     public SampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {

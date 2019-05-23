@@ -45,6 +45,7 @@
         android:layout_marginLeft="23dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/colorGray"
+        android:textIsSelectable="true"
         android:textSize="40dp"
         android:textStyle="bold" />
 
@@ -144,6 +145,7 @@
         android:layout_marginRight="23dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/layerlist"
+        android:textIsSelectable="true"
         android:lineSpacingMultiplier="1.2"
         android:padding="12dp"
         android:textColor="@color/colorGray"

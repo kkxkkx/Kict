@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.L;
+
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -42,6 +44,7 @@ import static bit.edu.cn.dictionary.bean.Page.HistoryInfo;
 import static bit.edu.cn.dictionary.bean.Page.WORDINFO;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.search.HistoryFragment.HisAdapter;
+import static bit.edu.cn.dictionary.utils.NetworkUtils.mark;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -121,10 +124,22 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
                 searchView.clearFocus();
                 searchword = s;
-                saveWord=new SaveWord(getBaseContext());
-                getWordFromInternet();
-                switchFragment(WORDINFO);
-                return true;
+                char[] array=searchword.toCharArray();
+                for(int i=0;i<array.length;i++)
+                {
+                    if((array[i]>='a'&&array[i]<='z')||(array[i]>='A'&&array[i]<='Z'));
+                    else
+                    {
+                        switchFragment(ERROR);
+                        return false;
+                    }
+                }
+                    saveWord=new SaveWord(getBaseContext());
+                    getWordFromInternet();
+                    //switchFragment(WORDINFO);
+                    return true;
+
+
             }
 
             @Override
@@ -224,9 +239,6 @@ public class SearchActivity extends AppCompatActivity {
         final String Word_temp = searchword;
         if (Word_temp == null || Word_temp.equals(""))
             return ;
-        char[] array = Word_temp.toCharArray();
-        if (array[0] > 256)  //TODO 中文输入做一个错误页面
-            return ;
 
         final String URL_temp = NetworkUtils.Search_Word1 + Word_temp + NetworkUtils.Search_Word2;
         Thread thread = new Thread(new Runnable() {
@@ -237,16 +249,18 @@ public class SearchActivity extends AppCompatActivity {
 
                 try {
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
-                    AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
-                    AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_uk");
-
-                    if (Word_Now == null)
+                    Log.v(TAG,"dancidanci"+Word_Now.getKey());
+                    if (Word_Now.getInterpret().equals("")&&Word_Now.getSentenceNum()==0)  //TODO 查不出来单词的错误页面
                         switchFragment(ERROR);
-                     else {
+                    else {
+                        AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
+                        AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_uk");
                         Runnable updateUIControl=new Runnable() {
                             @Override
                             public void run() {
-                               wordFragment.refresh();
+                                //TODO 可以改一下fragment的切换
+                               // switchFragment(WORDINFO);
+                                wordFragment.refresh();
                             }
                         };
                         SearchActivity.this.runOnUiThread(updateUIControl);
@@ -269,8 +283,8 @@ public class SearchActivity extends AppCompatActivity {
         thread.start();
     }
 
-
 }
+
 
 
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import bit.edu.cn.dictionary.R;
@@ -38,6 +39,9 @@ public class WordFragment extends Fragment {
     public ImageView iv_uk;
     public RecyclerView sentence_list;
     public  SentenceAdapter sentence_adapter;
+    public LinearLayout interpret;
+
+    public Boolean IsInterpret=true;
 
     public final static String TAG="WordFragment";
 
@@ -55,6 +59,7 @@ public class WordFragment extends Fragment {
         iv_state=view.findViewById(R.id.iv_save);
         iv_us=view.findViewById(R.id.pron_us);
         iv_uk=view.findViewById(R.id.pron_uk);
+        interpret=view.findViewById(R.id.pron_interpret_divider);
 
         sentence_list = view.findViewById(R.id.sentence_list);
 
@@ -68,6 +73,22 @@ public class WordFragment extends Fragment {
 
 
         final SaveWord saveWord=new SaveWord(getActivity());
+
+        interpret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(IsInterpret)
+                {
+                    tv_interpret.setVisibility(View.GONE);
+                    IsInterpret=false;
+                }
+                else
+                {
+                    tv_interpret.setVisibility(View.VISIBLE);
+                    IsInterpret=true;
+                }
+            }
+        });
 
         iv_us.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +135,6 @@ public class WordFragment extends Fragment {
 
     public void refresh()
     {
-
         Log.v("iv_state", String.valueOf(iv_state));
         if(saveWord.IsSaved(searchword,FORSAVE))
         {

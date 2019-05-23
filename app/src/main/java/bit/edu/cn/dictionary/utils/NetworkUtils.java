@@ -31,6 +31,8 @@ public class NetworkUtils {
     public final static String Search_Word2 = "&key=866085E8C4B3F7C1AB220880A51B031F";
     public final static String TAG="FetchXML";
 
+    public final static String mark="aaaaaaaa";
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static AWord getInputStreamByUrl(String urlStr, String searchword)
@@ -63,11 +65,12 @@ public class NetworkUtils {
             //解析
             parseXML.paraseXMLwithSAX(contentHandler, new InputSource(reader));
             Word_Now = contentHandler.getWord();
+
             Word_Now.setKey(searchword);
             Log.v(TAG,searchword);
             return Word_Now;
         }
-        else return null;
+        return null;
 
     }
 }
