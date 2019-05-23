@@ -1,6 +1,8 @@
 package bit.edu.cn.dictionary;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.net.sip.SipSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,10 +25,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.jaeger.library.StatusBarUtil;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -51,9 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ImageView iv_sign;
     public TextView tv_sign;
     public TextView tv_click;
+    public TextView tv_background;
     public Sign signhelper;
     public static SaveWord NotiWord;
     public static NoticeDB noticeDB;
+    public LottieAnimationView animation_fly;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -62,14 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTheme(R.style.AppTheme);
         StatusBarUtil.setTransparent(this);
         setContentView(R.layout.activity_main);
-
-
-//        View decorView = getWindow().getDecorView();
-//        int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(option);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
-
 
 
         NotiWord=new SaveWord(this);
@@ -93,20 +92,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signhelper=new Sign(this);
         final int signdays=signhelper.LoadSignDays(String.valueOf(date));
 
+        animation_fly=findViewById(R.id.animation_fly);
+        tv_background=findViewById(R.id.textView3);
         tv_click=findViewById(R.id.textView3);
         iv_sign=findViewById(R.id.iv_sign);
         tv_sign=findViewById(R.id.tv_sign);
         tv_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_date.setText("");
-                tv_sign.setText("签到成功！");
+
+                tv_date.setVisibility(View.INVISIBLE);
+                iv_sign.setVisibility(View.INVISIBLE);
+                tv_background.setVisibility(View.INVISIBLE);
+                tv_date.setVisibility(View.INVISIBLE);
+                tv_sign.setVisibility(View.INVISIBLE);
+
+                animation_fly.setVisibility(View.VISIBLE);
+                animation_fly.playAnimation();
                 sendwordMsg();
-                tv_date.setText("已连续签到"+signdays+"天");
-                iv_sign.setImageResource(R.drawable.icon_sign_already);
+
             }
         });
 
+        if(!animation_fly.isAnimating())
+        {
+            animation_fly.setVisibility(View.INVISIBLE);
+        }
+
+        animation_fly.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.e("Animation:","start");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.e("Animation:","end");
+                //Your code for remove the fragment
+                animation_fly.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                animation_fly.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                Log.e("Animation:","repeat");
+            }
+        });
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
