@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -175,9 +176,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void sendwordMsg() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         SendToNoti send=new SendToNoti();
+
         String word=send.getNoti_word();
         String interpret=send.getNoti_interpret();
+
+        Intent intent=new Intent(MainActivity.this,SearchActivity.class);
+        intent.putExtra("word",word);
+        PendingIntent contentIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+
         Log.v(TAG,"notification_display");
+
         Notification notification = new NotificationCompat.Builder(this, "word")
                 .setContentTitle(word)
                 //.setContentText(interpret)
@@ -186,12 +194,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.tosave))
                 .setAutoCancel(false)
                 .setShowWhen(false)
+                .setContentIntent(contentIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOngoing(true)  //不能删除
                 .build();
         manager.notify(1, notification);
+
         Log.v(TAG,"notification_isplay");
-    }
+        Intent appIntent=null;
+        appIntent = new Intent(this,InfoActivity.class);
+        appIntent.setAction(Intent.ACTION_MAIN);
+        appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+ }
 
     private void setStatusBarLightMode() {
         if (this.getWindow() != null) {

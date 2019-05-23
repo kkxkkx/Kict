@@ -2,6 +2,7 @@ package bit.edu.cn.dictionary;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -58,7 +59,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private TextView btn_back=null;
     public static SaveWord saveWord;
-    public HistoryWord historyWord;
+    public static HistoryWord historyWord;
     public  boolean flag=true;
     public static AudioPlayer audioPlay;
 
@@ -102,6 +103,18 @@ public class SearchActivity extends AppCompatActivity {
 
         int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         et_searchview= (EditText )searchView.findViewById(id);
+
+
+        Intent intent=getIntent();
+        String word=intent.getStringExtra("word");
+        if(word!=null)
+        {
+            searchword = word;
+            saveWord=new SaveWord(getBaseContext());
+            getWordFromInternet();
+            et_searchview.setText(word);
+            switchFragment(WORDINFO);
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

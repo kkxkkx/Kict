@@ -43,7 +43,10 @@ public class HistoryWord {
         super.finalize();
     }
 
-
+    public void empty()
+    {
+        db.delete(HistoryContract.HistoryInfo.TABLE_NAME,null,null) ;
+    }
 
     //查询数据放在RecentWord中
     public List<RecentWord> LoadWordsFromDatabase()
