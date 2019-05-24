@@ -105,9 +105,9 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    NetworkUtils.getInputStreamByUrl(URL_temp, word_info);
-                 //   AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
-                   // AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_uk");
+                    Word_Now=NetworkUtils.getInputStreamByUrl(URL_temp, word_info);
+                    AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
+                    AudioUtils.getAudio(Word_Now.getPronE(),Word_Now.getKey()+"_uk");
                     Runnable updateUIControl=new Runnable() {
                             @Override
                             public void run() {

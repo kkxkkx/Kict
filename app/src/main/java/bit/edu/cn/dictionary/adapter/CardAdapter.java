@@ -25,6 +25,7 @@ import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
 import static bit.edu.cn.dictionary.ListActivity.ListWord;
 import static bit.edu.cn.dictionary.ListActivity.audio;
@@ -35,7 +36,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
 
 
     public static final List<RecentWord> words=new ArrayList<>();
-    public static final String TAG="Sample";
+    public static final String TAG="Sampleeeee";
     private DetailClickListener mlistener;
     private Animation.AnimationListener animationListener;
 
@@ -127,6 +128,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
             @Override
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
+                Log.v(TAG,words.get(position).getWord());
                 mlistener.onClick(words.get(position).getWord());
             }
         });

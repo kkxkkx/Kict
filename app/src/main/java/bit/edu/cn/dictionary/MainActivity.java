@@ -41,6 +41,8 @@ import bit.edu.cn.dictionary.db.Temp;
 import bit.edu.cn.dictionary.notification.SendToNoti;
 import bit.edu.cn.dictionary.utils.NoticeParser;
 
+import static android.app.Notification.FLAG_NO_CLEAR;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_ADD=2;
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         signhelper=new Sign(this);
         tempword=new Temp(this);
-        int signdays=signhelper.LoadSignDays();
+        int signdays=signhelper.LoadSignDays(date);
 
         Log.v(TAG,"signsignsign"+signdays);
         if(signdays==0)
@@ -229,11 +231,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOngoing(true)  //不能删除
                 .build();
+        notification.flags|=FLAG_NO_CLEAR;
         manager.notify(1, notification);
 
         Log.v(TAG,"notification_isplay");
         Intent appIntent=null;
-        appIntent = new Intent(this,InfoActivity.class);
+        appIntent = new Intent(this,SearchActivity.class);
         appIntent.setAction(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);

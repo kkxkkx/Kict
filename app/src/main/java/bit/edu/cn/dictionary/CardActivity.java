@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,6 +21,7 @@ import java.lang.reflect.Method;
 import bit.edu.cn.dictionary.adapter.Card;
 import bit.edu.cn.dictionary.adapter.CardAdapter;
 import bit.edu.cn.dictionary.adapter.DetailClickListener;
+import bit.edu.cn.dictionary.adapter.MyDecorationOne;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.menu.SpaceItemDecoration;
 
@@ -54,7 +56,9 @@ public class CardActivity extends AppCompatActivity {
 
 
         int space=20;
-        recyclerView.addItemDecoration(new SpaceItemDecoration(space));
+        //recyclerView.addItemDecoration(new SpaceItemDecoration(space));
+        recyclerView.addItemDecoration(new MyDecorationOne(LinearLayout.VERTICAL,80));
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         iv_card_back=findViewById(R.id.iv_card_back);
@@ -75,6 +79,7 @@ public class CardActivity extends AppCompatActivity {
         CardAdapter.setDetailListener(new DetailClickListener() {
             @Override
             public void onClick(String word) {
+                Log.v(TAG,word);
                 Intent intent_pass=new Intent(CardActivity.this,InfoActivity.class);
                 intent_pass.putExtra("word",word);
                 startActivity(intent_pass);
@@ -104,7 +109,6 @@ public class CardActivity extends AppCompatActivity {
                 llm.scrollToPositionWithOffset(0, 0);
                 llm.setStackFromEnd(false);
                 CardAdapter.swith(Card.WORD);
-                //TODO 让所有的卡片都翻转回来
             }
         });
     }

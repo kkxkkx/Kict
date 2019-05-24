@@ -6,10 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.airbnb.lottie.L;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,7 +47,7 @@ public class Sign {
         Log.v(TAG, String.valueOf(days));
     }
 
-    public int LoadSignDays() {
+    public int LoadSignDays(Date date_now) {
         if (db == null) {
             return 1;
         }
@@ -64,8 +60,6 @@ public class Sign {
                                 SignContract.SignInfo._ID},
                         null, null, null,
                         null, SignContract.SignInfo.COlUMN_DATE + " DESC");
-
-                //TODO 存储不进去
 
                 Log.v(TAG,"cursor"+cursor.getCount());
 
@@ -84,7 +78,7 @@ public class Sign {
                     SetTime.setZeroTime(calendar);
 
                     Calendar calendar_now=Calendar.getInstance();
-                    calendar_now.setTime(new Date(System.currentTimeMillis()));
+                    calendar_now.setTime(date_now);
                     SetTime.setZeroTime(calendar_now);
 
                     Log.v(TAG, String.valueOf(System.currentTimeMillis()));
@@ -124,7 +118,6 @@ public class Sign {
                     cursor.close();
                 }
             }
-            Log.v(TAG,"signsignsign"+"zheli");
         return 1;
     }
 
