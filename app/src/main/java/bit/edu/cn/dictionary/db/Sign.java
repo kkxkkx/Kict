@@ -37,23 +37,21 @@ public class Sign {
         super.finalize();
     }
 
-    public void sign(String date,int days)
+    public void sign(int days)
     {
         if(db==null)
         {
             return ;
         }
         ContentValues contentValue=new ContentValues();
-        contentValue.put(COlUMN_DATE,date);
+        contentValue.put(COlUMN_DATE,System.currentTimeMillis());
         contentValue.put(COLUMN_DAYS,days);
         long rowID=db.insert(SignContract.SignInfo.TABLE_NAME,null,contentValue);
 
-        Log.v(TAG, "row"+String.valueOf(rowID));
-        Log.v(TAG,date);
         Log.v(TAG, String.valueOf(days));
     }
 
-    public int LoadSignDays(String date_now) {
+    public int LoadSignDays() {
         if (db == null) {
             return 1;
         }
@@ -68,14 +66,16 @@ public class Sign {
                         null, SignContract.SignInfo.COlUMN_DATE + " DESC");
 
                 //TODO 存储不进去
+
                 Log.v(TAG,"cursor"+cursor.getCount());
+
                 if(cursor.getCount()>0) {
                     cursor.moveToNext();
                     Long date = cursor.getLong(cursor.getColumnIndex(SignContract.SignInfo.COlUMN_DATE));
                     Log.v(TAG, String.valueOf(date));
                     if(date==0)
                     {
-                        sign(date_now, 1);
+                        sign(1);
                         return 1;
                     }
 
@@ -84,10 +84,10 @@ public class Sign {
                     SetTime.setZeroTime(calendar);
 
                     Calendar calendar_now=Calendar.getInstance();
-                    calendar_now.setTime(new Date(date_now));
+                    calendar_now.setTime(new Date(System.currentTimeMillis()));
                     SetTime.setZeroTime(calendar_now);
 
-                    Log.v(TAG,date_now.toString());
+                    Log.v(TAG, String.valueOf(System.currentTimeMillis()));
                     Log.v(TAG,date.toString());
                     long diff = 0;
 
@@ -107,16 +107,16 @@ public class Sign {
                     while (cursor.moveToNext()) {
                         if (day == 1) {
                             int num = cursor.getInt(cursor.getColumnIndex(SignContract.SignInfo.COLUMN_DAYS));
-                            sign(date_now, 1 + num);
+                            sign( 1 + num);
                             return 1 + num;
                         } else {
-                            sign(date_now, 1);
+                            sign( 1);
                             return 1;
                         }
                     }
                 }else
                 {
-                    sign(date_now, 1);
+                    sign( 1);
                     return 1;
                 }
             } finally {

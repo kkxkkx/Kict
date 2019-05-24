@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         signhelper=new Sign(this);
         tempword=new Temp(this);
-        final int signdays=signhelper.LoadSignDays(String.valueOf(date));
+        int signdays=signhelper.LoadSignDays();
 
         Log.v(TAG,"signsignsign"+signdays);
         if(signdays==0)

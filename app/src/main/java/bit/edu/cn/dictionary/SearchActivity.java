@@ -250,7 +250,7 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     Word_Now = NetworkUtils.getInputStreamByUrl(URL_temp, searchword);
                     Log.v(TAG,"dancidanci"+Word_Now.getKey());
-                    if (Word_Now.getInterpret().equals("")&&Word_Now.getSentenceNum()==0)  //TODO 查不出来单词的错误页面
+                    if (Word_Now.getInterpret().equals("")&&Word_Now.getSentenceNum()==0)
                         switchFragment(ERROR);
                     else {
                         AudioUtils.getAudio(Word_Now.getPronA(),Word_Now.getKey()+"_us");
@@ -258,8 +258,6 @@ public class SearchActivity extends AppCompatActivity {
                         Runnable updateUIControl=new Runnable() {
                             @Override
                             public void run() {
-                                //TODO 可以改一下fragment的切换
-                               // switchFragment(WORDINFO);
                                 wordFragment.refresh();
                             }
                         };
