@@ -1,8 +1,6 @@
 package bit.edu.cn.dictionary;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -11,21 +9,16 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.net.sip.SipSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,14 +30,14 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import bit.edu.cn.dictionary.bean.SignState;
 import bit.edu.cn.dictionary.db.NoticeDB;
 import bit.edu.cn.dictionary.db.SaveWord;
 import bit.edu.cn.dictionary.db.Sign;
+import bit.edu.cn.dictionary.db.Temp;
 import bit.edu.cn.dictionary.notification.SendToNoti;
 import bit.edu.cn.dictionary.utils.NoticeParser;
 
@@ -57,10 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_sign;
     public TextView tv_click;
     public TextView tv_background;
+    public TextView tv_dailyword;
     public Sign signhelper;
     public static SaveWord NotiWord;
     public static NoticeDB noticeDB;
+    public Temp tempword;
     public LottieAnimationView animation_fly;
+
+    public static String daily_word;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -70,6 +67,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StatusBarUtil.setTransparent(this);
         setContentView(R.layout.activity_main);
 
+
+        animation_fly=findViewById(R.id.animation_fly);
+        tv_background=findViewById(R.id.textView3);
+        tv_click=findViewById(R.id.textView3);
+        iv_sign=findViewById(R.id.iv_sign);
+        tv_dailyword=findViewById(R.id.tv_daily_word);
+        tv_sign=findViewById(R.id.tv_sign);
+        tv_date=findViewById(R.id.tv_date);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
+        Date date = new Date(System.currentTimeMillis());
+        tv_date.setText(simpleDateFormat.format(date));
+
+
+        signhelper=new Sign(this);
+        tempword=new Temp(this);
+        final int signdays=signhelper.LoadSignDays(String.valueOf(date));
+        signhelper.LoadSignDays(String.valueOf(date));
+        Log.v(TAG,"signsignsign"+signdays);
+        if(signdays==0)
+        {
+            signInVisible(SignState.ALREADY);
+        }else{
+            signInVisible(SignState.NOTYET);
+        }
 
         NotiWord=new SaveWord(this);
         noticeDB=new NoticeDB(this);
@@ -84,64 +106,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        tv_date=findViewById(R.id.tv_date);
-        tv_date.setText(simpleDateFormat.format(date));
-        signhelper=new Sign(this);
-        final int signdays=signhelper.LoadSignDays(String.valueOf(date));
 
-        animation_fly=findViewById(R.id.animation_fly);
-        tv_background=findViewById(R.id.textView3);
-        tv_click=findViewById(R.id.textView3);
-        iv_sign=findViewById(R.id.iv_sign);
-        tv_sign=findViewById(R.id.tv_sign);
         tv_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                tv_date.setVisibility(View.INVISIBLE);
-                iv_sign.setVisibility(View.INVISIBLE);
-                tv_background.setVisibility(View.INVISIBLE);
-                tv_date.setVisibility(View.INVISIBLE);
-                tv_sign.setVisibility(View.INVISIBLE);
-
-                animation_fly.setVisibility(View.VISIBLE);
-                animation_fly.playAnimation();
-                sendwordMsg();
-
+                signInVisible(SignState.ALREADY);
+                daily_word=sendwordMsg();
+                tv_dailyword.setText(daily_word);
             }
         });
 
-        if(!animation_fly.isAnimating())
-        {
-            animation_fly.setVisibility(View.INVISIBLE);
-        }
 
-        animation_fly.addAnimatorListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                Log.e("Animation:","start");
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                Log.e("Animation:","end");
-                //Your code for remove the fragment
-                animation_fly.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                animation_fly.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                Log.e("Animation:","repeat");
-            }
-        });
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -211,13 +187,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         notificationManager.createNotificationChannel(channel);
     }
 
-    public void sendwordMsg() {
+    public String sendwordMsg() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         SendToNoti send=new SendToNoti();
 
         String word=send.getNoti_word();
         String interpret=send.getNoti_interpret();
-
+        tempword.add(word);
         Intent intent=new Intent(MainActivity.this,SearchActivity.class);
         intent.putExtra("word",word);
         PendingIntent contentIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
@@ -244,8 +220,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appIntent.setAction(Intent.ACTION_MAIN);
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        return word;
  }
 
+public void signInVisible(SignState sign)
+{
+    if(sign==SignState.ALREADY)
+    {
+        tv_date.setVisibility(View.INVISIBLE);
+        iv_sign.setVisibility(View.INVISIBLE);
+        tv_background.setVisibility(View.INVISIBLE);
+        tv_date.setVisibility(View.INVISIBLE);
+        tv_sign.setVisibility(View.INVISIBLE);
+        tv_dailyword.setVisibility(View.VISIBLE);
+        tv_dailyword.setText(tempword.loadFromTemp());
+
+    }else{
+        tv_date.setVisibility(View.VISIBLE);
+        iv_sign.setVisibility(View.VISIBLE);
+        tv_background.setVisibility(View.VISIBLE);
+        tv_date.setVisibility(View.VISIBLE);
+        tv_sign.setVisibility(View.VISIBLE);
+        tv_dailyword.setVisibility(View.INVISIBLE);
+    }
+
+}
 
 }
 

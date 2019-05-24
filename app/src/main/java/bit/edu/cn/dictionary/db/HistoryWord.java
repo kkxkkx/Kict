@@ -69,6 +69,7 @@ public class HistoryWord {
                             HistoryContract.HistoryInfo._ID},
                     null,null,null,
                     null, HistoryContract.HistoryInfo.COlUMN_DATE+" DESC");
+            Log.v(TAG,"signsignsign"+"histiry"+cursor.getCount());
             while(cursor.moveToNext())
             {
                 long int_now=cursor.getLong(cursor.getColumnIndex(HistoryContract.HistoryInfo._ID));

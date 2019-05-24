@@ -129,8 +129,6 @@ public class NoticeDB {
                     RecentWord recentWord=new RecentWord(int_now);
                     recentWord.setWord(word_now);
                     recentWord.setInterpret(interpret_now);
-                    Log.v(TAG,"1111"+recentWord.getWord());
-                    Log.v(TAG,"1111"+recentWord.getInterpret());
                     return recentWord;
                 }
             }

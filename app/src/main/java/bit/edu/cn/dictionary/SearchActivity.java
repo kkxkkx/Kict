@@ -136,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                     saveWord=new SaveWord(getBaseContext());
                     getWordFromInternet();
-                    //switchFragment(WORDINFO);
+                    switchFragment(WORDINFO);
                     return true;
 
 
