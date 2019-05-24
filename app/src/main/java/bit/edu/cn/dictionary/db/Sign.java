@@ -6,9 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.airbnb.lottie.L;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import bit.edu.cn.dictionary.notification.SetTime;
 
 import static bit.edu.cn.dictionary.db.SignContract.SignInfo.COLUMN_DAYS;
 import static bit.edu.cn.dictionary.db.SignContract.SignInfo.COlUMN_DATE;
@@ -42,6 +47,10 @@ public class Sign {
         contentValue.put(COlUMN_DATE,date);
         contentValue.put(COLUMN_DAYS,days);
         long rowID=db.insert(SignContract.SignInfo.TABLE_NAME,null,contentValue);
+
+        Log.v(TAG, "row"+String.valueOf(rowID));
+        Log.v(TAG,date);
+        Log.v(TAG, String.valueOf(days));
     }
 
     public int LoadSignDays(String date_now) {
@@ -58,24 +67,43 @@ public class Sign {
                         null, null, null,
                         null, SignContract.SignInfo.COlUMN_DATE + " DESC");
 
+                //TODO 存储不进去
+                Log.v(TAG,"cursor"+cursor.getCount());
                 if(cursor.getCount()>0) {
                     cursor.moveToNext();
                     Long date = cursor.getLong(cursor.getColumnIndex(SignContract.SignInfo.COlUMN_DATE));
-                    Log.v(TAG,date.toString());
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                    long diff = 0;
-                    Log.v(TAG, String.valueOf(date_now));
                     Log.v(TAG, String.valueOf(date));
-                    Date date1=new Date(date);
-                    Date date2=new Date(date_now);
-                    df.format(date1);df.format(date2);
-                    diff=(int)(date2.getTime()-date1.getTime());
-                    //diff = df.parse(date2)-df.parse(String.valueOf(date1));
+                    if(date==0)
+                    {
+                        sign(date_now, 1);
+                        return 1;
+                    }
+
+                    Calendar calendar=Calendar.getInstance();
+                    calendar.setTime(new Date(date));
+                    SetTime.setZeroTime(calendar);
+
+                    Calendar calendar_now=Calendar.getInstance();
+                    calendar_now.setTime(new Date(date_now));
+                    SetTime.setZeroTime(calendar_now);
+
+                    Log.v(TAG,date_now.toString());
+                    Log.v(TAG,date.toString());
+                    long diff = 0;
+
+
+                    diff=calendar_now.getTime().getTime()-calendar.getTime().getTime();
+
+                    Log.v(TAG, "dfif"+String.valueOf(diff));
+
                     if(diff<nd)
                     {
                         return 0;
                     }
                     long day = diff / nd;
+
+
+
                     while (cursor.moveToNext()) {
                         if (day == 1) {
                             int num = cursor.getInt(cursor.getColumnIndex(SignContract.SignInfo.COLUMN_DAYS));

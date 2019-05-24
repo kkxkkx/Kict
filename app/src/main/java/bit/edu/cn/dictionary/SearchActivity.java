@@ -151,7 +151,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
+                //    HisAdapter.refresh(historyWord.LoadWordsFromDatabase());
                     switchFragment(HistoryInfo);
                 }
                 return false;

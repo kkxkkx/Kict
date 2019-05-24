@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,13 +32,14 @@ public class CardActivity extends AppCompatActivity {
     public ImageView iv_card_back;
     public Button btn_random;
     public Button btn_again;
+    public static final String TAG="cardswitchactivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-        int position=intent.getIntExtra("position",0);
+        final int position=intent.getIntExtra("position",0);
         this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -61,7 +63,7 @@ public class CardActivity extends AppCompatActivity {
 
 
 
-        LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
+        final LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
         llm.scrollToPositionWithOffset(position, 0);
         llm.setStackFromEnd(false);
 
@@ -79,18 +81,30 @@ public class CardActivity extends AppCompatActivity {
             }
         });
 
+        iv_card_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btn_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i=(int) (Math.random() * CardAdapter.getItemCount());
-                //TODO 转到指定位置
+                Log.v(TAG, String.valueOf(i));
+                llm.scrollToPositionWithOffset(i, 0);
+                llm.setStackFromEnd(false);
+
             }
         });
 
         btn_again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                llm.scrollToPositionWithOffset(0, 0);
+                llm.setStackFromEnd(false);
+                CardAdapter.swith(Card.WORD);
+                //TODO 让所有的卡片都翻转回来
             }
         });
     }

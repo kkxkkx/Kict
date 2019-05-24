@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#CD950C</color>
     <color name="colorDark">#4A4A4A</color>
     <color name="colorGreen">#458B00</color>
@@ -13,4 +14,5 @@
     <color name="gray_trans">#88e5e6e7</color>
     <color name="colorGrayText">#9e9d9d</color>
     <color name="colorGrayTextDark">#636363</color>
+
 </resources>

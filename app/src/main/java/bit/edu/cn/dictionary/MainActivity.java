@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signhelper=new Sign(this);
         tempword=new Temp(this);
         final int signdays=signhelper.LoadSignDays(String.valueOf(date));
-        signhelper.LoadSignDays(String.valueOf(date));
+
         Log.v(TAG,"signsignsign"+signdays);
         if(signdays==0)
         {
@@ -106,6 +106,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+
+        tv_dailyword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String word_daily=tempword.loadFromTemp();
+                Log.v(TAG,"signnnnnn"+word_daily);
+                if(word_daily!=null)
+                {
+                    Intent intent=new Intent(MainActivity.this,SearchActivity.class);
+                    intent.putExtra("word",word_daily);
+                    startActivity(intent);
+                }
+            }
+        });
 
         tv_click.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +207,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String word=send.getNoti_word();
         String interpret=send.getNoti_interpret();
+        Log.v(TAG,"signnnn"+word);
+
         tempword.add(word);
+
         Intent intent=new Intent(MainActivity.this,SearchActivity.class);
         intent.putExtra("word",word);
         PendingIntent contentIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);

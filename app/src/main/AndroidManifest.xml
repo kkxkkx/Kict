@@ -31,6 +31,7 @@
         <activity android:name=".DebugActivity"></activity>
         <activity android:name=".CardActivity"></activity>
         <activity android:name="InfoActivity"></activity>
+        <activity android:name=".HomeActivity"></activity>
 
     </application>
 

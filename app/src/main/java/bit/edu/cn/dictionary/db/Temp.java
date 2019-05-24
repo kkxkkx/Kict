@@ -42,6 +42,7 @@ public class Temp {
         }
         ContentValues contentValue=new ContentValues();
         contentValue.put(COlUMN_WORD,word);
+        contentValue.put(COlUMN_DATE,System.currentTimeMillis());
         long rowID=db.insert(TABLE_NAME,null,contentValue);
     }
 

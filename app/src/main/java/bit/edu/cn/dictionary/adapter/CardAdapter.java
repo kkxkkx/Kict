@@ -43,7 +43,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
         this.mlistener=mListener;
     }
 
-    public void setAnmationLisetner(Animation.AnimationListener anmationLisetner){this.animationListener=anmationLisetner;}
 
     public  void refresh(List<RecentWord> newWords){
         Log.v(TAG,"refresh");
@@ -65,9 +64,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHold
                 words.get(i).isFlipped=false;
 
             }
-
+            notifyDataSetChanged();
         }
+
     }
+
     @NonNull
     @Override
     public SampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
