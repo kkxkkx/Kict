@@ -8,6 +8,7 @@ public class tempcontract {
             "CREATE TABLE "+ tempInfo.TABLE_NAME+"("+
                     tempInfo._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                     tempInfo.COlUMN_DATE+" TEXT,"+
+                    tempInfo.COLUMN_INTERPRET+" TEXT,"+
                     tempInfo.COlUMN_WORD+" TEXT UNIQUE)";
 
     public static final String SQL_DELETE_ENTRIES=
@@ -17,6 +18,7 @@ public class tempcontract {
     {
         public static String  TABLE_NAME="dailyword";
         public static String  COlUMN_WORD="word";
+        public static String  COLUMN_INTERPRET="interpret";
         public static String  COlUMN_DATE="date";
     }
 }

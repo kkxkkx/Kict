@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.airbnb.lottie.LottieAnimationView;
 import com.jaeger.library.StatusBarUtil;
 
@@ -33,6 +34,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.bean.SignState;
 import bit.edu.cn.dictionary.db.NoticeDB;
 import bit.edu.cn.dictionary.db.SaveWord;
@@ -46,7 +48,7 @@ import static android.app.Notification.FLAG_NO_CLEAR;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_ADD=2;
-    private static final String TAG="main";
+    private static final String TAG="mainnnn";
     public TextView tv_date;
     public ImageView iv_sign;
     public TextView tv_sign;
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static NoticeDB noticeDB;
     public Temp tempword;
     public LottieAnimationView animation_fly;
+
+    private String word;
+    private String interpret;
 
     public static String daily_word;
 
@@ -91,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(signdays==0)
         {
             signInVisible(SignState.ALREADY);
+            RecentWord re=tempword.loadFromTemp();
+            word=re.getWord();
+            interpret=re.getInterpret();
+            sendwordMsg();
+            tv_dailyword.setText(word);
+
         }else{
             signInVisible(SignState.NOTYET);
         }
@@ -112,12 +123,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_dailyword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String word_daily=tempword.loadFromTemp();
-                Log.v(TAG,"signnnnnn"+word_daily);
-                if(word_daily!=null)
+                RecentWord re =tempword.loadFromTemp();
+                if(re.getWord()!=null)
                 {
                     Intent intent=new Intent(MainActivity.this,SearchActivity.class);
-                    intent.putExtra("word",word_daily);
+                    intent.putExtra("word",re.getWord());
                     startActivity(intent);
                 }
             }
@@ -128,12 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
 
                 signInVisible(SignState.ALREADY);
+                refreshword();
                 daily_word=sendwordMsg();
                 tv_dailyword.setText(daily_word);
             }
         });
-
-
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -150,7 +159,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.find).setOnClickListener(this);
         findViewById(R.id.WordBook).setOnClickListener(this);
         findViewById(R.id.home).setOnClickListener(this);
+    }
 
+    public void refreshword()
+    {
+        SendToNoti send=new SendToNoti();
+         word=send.getNoti_word();
+         interpret=send.getNoti_interpret();
+         Log.v(TAG,word);
+         Log.v(TAG,interpret);
+        tempword.add(word,interpret);
     }
 
     //申请权限
@@ -205,13 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String sendwordMsg() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        SendToNoti send=new SendToNoti();
-
-        String word=send.getNoti_word();
-        String interpret=send.getNoti_interpret();
-        Log.v(TAG,"signnnn"+word);
-
-        tempword.add(word);
 
         Intent intent=new Intent(MainActivity.this,SearchActivity.class);
         intent.putExtra("word",word);
@@ -253,7 +264,6 @@ public void signInVisible(SignState sign)
         tv_date.setVisibility(View.INVISIBLE);
         tv_sign.setVisibility(View.INVISIBLE);
         tv_dailyword.setVisibility(View.VISIBLE);
-        tv_dailyword.setText(tempword.loadFromTemp());
 
     }else{
         tv_date.setVisibility(View.VISIBLE);

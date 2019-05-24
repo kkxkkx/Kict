@@ -67,6 +67,7 @@ public class Sign {
                     cursor.moveToNext();
                     Long date = cursor.getLong(cursor.getColumnIndex(SignContract.SignInfo.COlUMN_DATE));
                     Log.v(TAG, String.valueOf(date));
+
                     if(date==0)
                     {
                         sign(1);

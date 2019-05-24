@@ -12,6 +12,12 @@ public class RecentWord {
     private boolean isNoti=false;  //判断有没有在通知栏显示过
     private String pron;
 
+    public RecentWord()
+    {
+        this.interpret="";
+        this.word="";
+        this.pron="";
+    }
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
