@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.adapter.SentenceAdapter;
 import bit.edu.cn.dictionary.db.SaveWord;
-import bit.edu.cn.dictionary.select.OnWordClickListener;
-import bit.edu.cn.dictionary.select.SelectableTextHelper;
 
 import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
 import static bit.edu.cn.dictionary.SearchActivity.audioPlay;
@@ -45,7 +42,7 @@ public class WordFragment extends Fragment {
     public LinearLayout interpret;
 
     public Boolean IsInterpret=true;
-    SelectableTextHelper mSelectableTextHelper;
+   // SelectableTextHelper mSelectableTextHelper;
     public final static String TAG="WordFragment";
 
     @Override

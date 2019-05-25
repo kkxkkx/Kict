@@ -19,14 +19,16 @@ import bit.edu.cn.dictionary.R;
 import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.Sentence;
-import bit.edu.cn.dictionary.select.OnWordClickListener;
-import bit.edu.cn.dictionary.select.SelectableTextHelper;
+import com.brioal.selectabletextview.OnWordClickListener;
+import com.brioal.selectabletextview.SelectableTextView;
+//import bit.edu.cn.dictionary.select.OnWordClickListener;
+//import bit.edu.cn.dictionary.select.SelectableTextHelper;
 
 public class SentenceAdapter extends RecyclerView.Adapter<SentenceAdapter.SentenceViewHolder> {
 
     private static final String TAG ="Scentence_Adpater" ;
     private final List<Sentence> sentences=new ArrayList<>();
-    SelectableTextHelper mSelectableTextHelper;
+    //SelectableTextHelper mSelectableTextHelper;
     public Context mcontext;
 
     public  void refresh(List<Sentence> newSentence){
@@ -50,21 +52,31 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceAdapter.Senten
     public void onBindViewHolder(@NonNull SentenceViewHolder sentenceViewHolder, int i) {
         sentenceViewHolder.bind(sentences.get(i));
 
-        mSelectableTextHelper = new SelectableTextHelper.Builder(sentenceViewHolder.iv_sentence)
-                .setSelectedColor(mcontext.getResources().getColor(R.color.gray_trans))
-                .setCursorHandleSizeInDp(20)
-                .setCursorHandleColor(mcontext.getResources().getColor(R.color.colorDark))
-                .build();
-        mSelectableTextHelper.setOnNotesClickListener(new OnWordClickListener() {
+//        mSelectableTextHelper = new SelectableTextHelper.Builder(sentenceViewHolder.iv_sentence)
+//                .setSelectedColor(mcontext.getResources().getColor(R.color.gray_trans))
+//                .setCursorHandleSizeInDp(20)
+//                .setCursorHandleColor(mcontext.getResources().getColor(R.color.colorDark))
+//                .build();
+//        mSelectableTextHelper.setOnNotesClickListener(new OnWordClickListener() {
+//            @Override
+//            public void onTextSelect(CharSequence charSequence) {
+//
+//                String content = charSequence.toString();
+//                Intent intent=new Intent(mcontext, SearchActivity.class);
+//                intent.putExtra("word",content);
+//                mcontext.startActivity(intent);
+//
+//                //Toast.makeText(mcontext, "点击的是:" + content, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        sentenceViewHolder.iv_sentence.setOnWordClickListener(new com.brioal.selectabletextview.OnWordClickListener() {
             @Override
-            public void onTextSelect(CharSequence charSequence) {
+            protected void onNoDoubleClick(String word) {
 
-                String content = charSequence.toString();
                 Intent intent=new Intent(mcontext, SearchActivity.class);
-                intent.putExtra("word",content);
+                intent.putExtra("word",word);
                 mcontext.startActivity(intent);
-
-                //Toast.makeText(mcontext, "点击的是:" + content, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -76,11 +88,11 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceAdapter.Senten
 
     class SentenceViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView iv_sentence;
+        private SelectableTextView iv_sentence;
         private TextView iv_translation;
         public SentenceViewHolder(@NonNull View itemView) {
             super(itemView);
-            iv_sentence=(TextView) itemView.findViewById(R.id.tv_sentence);
+            iv_sentence=itemView.findViewById(R.id.tv_sentence);
             iv_translation=(TextView) itemView.findViewById(R.id.tv_translation);
         }
 

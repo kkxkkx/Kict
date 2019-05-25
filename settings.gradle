@@ -1,1 +1,1 @@
-include ':app', ':EasyFlipView', ':library'
+include ':app', ':EasyFlipView', ':library', ':selectabletextview'

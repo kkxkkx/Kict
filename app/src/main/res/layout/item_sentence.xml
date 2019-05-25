@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     >
 
-    <TextView
+    <com.brioal.selectabletextview.SelectableTextView
         android:id="@+id/tv_sentence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

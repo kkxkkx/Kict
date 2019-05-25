@@ -1,7 +1,6 @@
 package bit.edu.cn.dictionary.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,16 +14,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import bit.edu.cn.dictionary.SearchActivity;
+import bit.edu.cn.dictionary.ListActivity;
+import bit.edu.cn.dictionary.R;
+import bit.edu.cn.dictionary.bean.RecentWord;
 import bit.edu.cn.dictionary.notification.CheckboxChangeListener;
 import bit.edu.cn.dictionary.notification.ItemClickListener;
 import bit.edu.cn.dictionary.notification.ItemLongClickListener;
-import bit.edu.cn.dictionary.R;
 
-import bit.edu.cn.dictionary.ListActivity;
-import bit.edu.cn.dictionary.bean.RecentWord;
-import bit.edu.cn.dictionary.select.OnWordClickListener;
-import bit.edu.cn.dictionary.select.SelectableTextHelper;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder> {
 
@@ -33,7 +29,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder
     private CheckboxChangeListener mchecklistener;
     private static final String TAG = "ListAdapter";
     public static final List<RecentWord> words=new ArrayList<>();
-    public SelectableTextHelper mSelectableTextHelper;
+    //public SelectableTextHelper mSelectableTextHelper;
     public Context mcontext;
 
     public void setmListener(ItemClickListener mListener){
