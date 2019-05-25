@@ -1,4 +1,4 @@
-package bit.edu.cn.dictionary.adapter;
+package bit.edu.cn.dictionary.bean;
 
 public enum Card {
     WORD(0),INTERPRET(1);

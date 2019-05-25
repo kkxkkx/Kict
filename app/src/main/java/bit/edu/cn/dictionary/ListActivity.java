@@ -125,11 +125,11 @@ public class ListActivity extends AppCompatActivity {
                         checkNum++;
                     }
                 }
-                if(checkNum==0&&isLong)   //如果是长按激发的，没有勾选时退出
-                {
-                    BackToNormal();
-                }
-                else {
+//                if(checkNum==0&&isLong)   //如果是长按激发的，没有勾选时退出
+//                {
+//                    BackToNormal();
+//                }
+               // else {
                     if(checkNum==0)
                     {
                         mDeleteWord.setEnabled(false);
@@ -151,7 +151,7 @@ public class ListActivity extends AppCompatActivity {
                             mSelectAll.setIcon(R.drawable.ic_wait_to_check);
                         }
                     }
-                }
+               // }
                 Log.v(TAG, String.valueOf(mSelectAll.getTitle()));
             }
 

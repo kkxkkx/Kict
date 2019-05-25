@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.security.acl.LastOwnerException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.RecentWord;
+import bit.edu.cn.dictionary.bean.SaveState;
 import bit.edu.cn.dictionary.db.SaveContract.SaveInfo;
 
 
@@ -96,7 +96,7 @@ public class SaveWord {
         return result;
     }
 
-    public boolean IsSaved(String word,SaveState state)
+    public boolean IsSaved(String word, SaveState state)
     {
         String selection=SaveInfo.COLUMN_WORD+" = ?";
         String[] selectionArgs={word};

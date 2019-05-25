@@ -22,7 +22,7 @@ import static bit.edu.cn.dictionary.SearchActivity.saveWord;
 import static bit.edu.cn.dictionary.SearchActivity.searchword;
 import static bit.edu.cn.dictionary.bean.State.NOTSAVE;
 import static bit.edu.cn.dictionary.bean.State.SAVED;
-import static bit.edu.cn.dictionary.db.SaveState.FORSAVE;
+import static bit.edu.cn.dictionary.bean.SaveState.FORSAVE;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.UK_ACCENT;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.US_ACCENT;
 

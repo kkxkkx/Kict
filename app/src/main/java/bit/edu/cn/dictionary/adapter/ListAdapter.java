@@ -81,8 +81,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SaveViewHolder
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.v("checkboxListener","");
                 mchecklistener.onChanged();
-               // int position=holder.getAdapterPosition();
-               // mchecklistener.onCheckClick(buttonView,position);
             }
         });
 

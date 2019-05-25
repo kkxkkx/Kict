@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,12 +17,11 @@ import android.widget.LinearLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import bit.edu.cn.dictionary.adapter.Card;
+import bit.edu.cn.dictionary.bean.Card;
 import bit.edu.cn.dictionary.adapter.CardAdapter;
 import bit.edu.cn.dictionary.adapter.DetailClickListener;
 import bit.edu.cn.dictionary.adapter.MyDecorationOne;
 import bit.edu.cn.dictionary.db.SaveWord;
-import bit.edu.cn.dictionary.menu.SpaceItemDecoration;
 
 import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
 import static bit.edu.cn.dictionary.ListActivity.ListWord;

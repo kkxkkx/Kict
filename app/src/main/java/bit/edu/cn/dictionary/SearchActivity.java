@@ -116,6 +116,7 @@ public class SearchActivity extends AppCompatActivity {
             saveWord=new SaveWord(getBaseContext());
             getWordFromInternet();
             et_searchview.setText(word);
+            searchView.clearFocus();
             switchFragment(WORDINFO);
         }
 

@@ -1,8 +1,5 @@
 package bit.edu.cn.dictionary.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,17 +16,11 @@ import com.wajahatkarim3.easyflipview.EasyFlipView;
 import java.util.ArrayList;
 import java.util.List;
 
-import bit.edu.cn.dictionary.CardActivity;
-import bit.edu.cn.dictionary.InfoActivity;
 import bit.edu.cn.dictionary.R;
-import bit.edu.cn.dictionary.SearchActivity;
+import bit.edu.cn.dictionary.bean.Card;
 import bit.edu.cn.dictionary.bean.RecentWord;
 
-import static android.content.Context.LOCATION_SERVICE;
-import static bit.edu.cn.dictionary.ListActivity.ListAdapter;
-import static bit.edu.cn.dictionary.ListActivity.ListWord;
 import static bit.edu.cn.dictionary.ListActivity.audio;
-import static bit.edu.cn.dictionary.SearchActivity.Word_Now;
 import static bit.edu.cn.dictionary.utils.AudioPlayer.US_ACCENT;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.SampleViewHolder> {

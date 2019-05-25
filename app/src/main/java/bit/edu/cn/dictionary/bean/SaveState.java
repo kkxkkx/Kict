@@ -1,4 +1,4 @@
-package bit.edu.cn.dictionary.db;
+package bit.edu.cn.dictionary.bean;
 
 public enum SaveState {
     FORSAVE(0),FORNOTIFICATION(1);
