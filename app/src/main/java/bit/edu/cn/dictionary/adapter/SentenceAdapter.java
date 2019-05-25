@@ -1,5 +1,7 @@
 package bit.edu.cn.dictionary.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,20 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import bit.edu.cn.dictionary.R;
+import bit.edu.cn.dictionary.SearchActivity;
 import bit.edu.cn.dictionary.bean.AWord;
 import bit.edu.cn.dictionary.bean.Sentence;
+import bit.edu.cn.dictionary.select.OnWordClickListener;
+import bit.edu.cn.dictionary.select.SelectableTextHelper;
 
 public class SentenceAdapter extends RecyclerView.Adapter<SentenceAdapter.SentenceViewHolder> {
 
     private static final String TAG ="Scentence_Adpater" ;
     private final List<Sentence> sentences=new ArrayList<>();
-
+    SelectableTextHelper mSelectableTextHelper;
+    public Context mcontext;
 
     public  void refresh(List<Sentence> newSentence){
         sentences.clear();
@@ -35,12 +42,31 @@ public class SentenceAdapter extends RecyclerView.Adapter<SentenceAdapter.Senten
     public SentenceViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_sentence,viewGroup,false);
         SentenceAdapter.SentenceViewHolder viewHolder=new SentenceAdapter.SentenceViewHolder(view);
+        mcontext=viewGroup.getContext();
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull SentenceViewHolder sentenceViewHolder, int i) {
         sentenceViewHolder.bind(sentences.get(i));
+
+        mSelectableTextHelper = new SelectableTextHelper.Builder(sentenceViewHolder.iv_sentence)
+                .setSelectedColor(mcontext.getResources().getColor(R.color.gray_trans))
+                .setCursorHandleSizeInDp(20)
+                .setCursorHandleColor(mcontext.getResources().getColor(R.color.colorDark))
+                .build();
+        mSelectableTextHelper.setOnNotesClickListener(new OnWordClickListener() {
+            @Override
+            public void onTextSelect(CharSequence charSequence) {
+
+                String content = charSequence.toString();
+                Intent intent=new Intent(mcontext, SearchActivity.class);
+                intent.putExtra("word",content);
+                mcontext.startActivity(intent);
+
+                //Toast.makeText(mcontext, "点击的是:" + content, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
