@@ -16,10 +16,9 @@ public class NetSpeed {
     public String getNetSpeed(int uid) {
         long nowTotalRxBytes = getTotalRxBytes(uid);
         long nowTimeStamp = System.currentTimeMillis();
-        //Log.v(TAG, "net"+String.valueOf(nowTotalRxBytes-lastTimeStamp));
-        Log.v(TAG, "net"+String.valueOf((nowTotalRxBytes-lastTotalRxBytes)*1000));
-        Log.v(TAG, "time"+String.valueOf(nowTimeStamp-lastTimeStamp));
-        double speed = ((nowTotalRxBytes - lastTotalRxBytes) * 1000 / (nowTimeStamp - lastTimeStamp));//毫秒转换
+
+        double speed = ((nowTotalRxBytes - lastTotalRxBytes) * 1000 /
+                (nowTimeStamp - lastTimeStamp));//毫秒转换
         Log.v(TAG,"speed"+speed);
         lastTimeStamp = nowTimeStamp;
         lastTotalRxBytes = nowTotalRxBytes;

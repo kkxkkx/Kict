@@ -164,7 +164,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Log.v(TAG,"hasFocus"+hasFocus);
-                switchFragment(HistoryInfo);
+//                switchFragment(HistoryInfo);
             }
         });
 
@@ -198,8 +198,8 @@ public class SearchActivity extends AppCompatActivity {
     public void switchFragment(Page page)
     {
         FragmentManager fm=getFragmentManager();
-        if(fm.getBackStackEntryCount()!=0)
-            fm.popBackStack();
+//        if(fm.getBackStackEntryCount()!=0)
+//            fm.popBackStack();
         FragmentTransaction ft=fm.beginTransaction();
         switch (page){
             case WORDINFO:
